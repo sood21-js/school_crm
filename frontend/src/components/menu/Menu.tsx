@@ -1,11 +1,12 @@
 import React from 'react';
 
-type TMenu = {}
+type TMenu = unknown
 
 export const Menu: React.FC<TMenu> = () => {
-  return (
-    <div className="container">
-    adasdasdasd
-    </div>
-  )
+    const Num = 12
+    return (
+        <div className="container">
+            {Num}
+        </div>
+    )
 }
