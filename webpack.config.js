@@ -51,10 +51,11 @@ module.exports = {
     resolve: {
         alias: {
             '@lib': path.resolve(__dirname, './frontend/src/lib'),
+            '@style': path.resolve(__dirname, './frontend/src/styles'),
             '@src': path.resolve(__dirname, './frontend/src'),
             '@back': path.resolve(__dirname, './backend')
         },
-        extensions: ['.js', '.ts', '.jsx', '.tsx'],
+        extensions: [".ts", ".tsx", ".js", ".jsx", ".css", ".scss"]
     },
     optimization: optimization(),
     devServer: {
@@ -91,11 +92,19 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: cssLoader(),
+                use: cssLoader()
             },
             {
                 test: /\.less$/,
                 use: cssLoader('less-loader'),
+            },
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'sass-loader',
+                ],
             },
             {
                 test: /\.(png|jpe?g|gif)$/i,
