@@ -12,6 +12,7 @@
     "extends": [
         // Базовый набор правил eslint
         "eslint:recommended",
+        "plugin:react/recommended",
         // Отключаем правила из базового набора
         "plugin:@typescript-eslint/eslint-recommended",
         // Базовые правила для TypeScript
@@ -32,6 +33,7 @@
         "react-hooks"
     ],
     "rules": {
+        "indent": ["error"],
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
         "no-console": 0,
@@ -49,6 +51,9 @@
         "import/no-cycle": 0,
         "global-require": 0,
         "react/no-multi-comp": 0,
-        "react/prefer-stateless-function": 0
+        "react/prefer-stateless-function": 0,
+        "@typescript-eslint/no-unsafe-member-access": "off",
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off"
     }
 }

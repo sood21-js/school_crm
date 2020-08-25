@@ -5,7 +5,7 @@ type TApp = unknown
 export const App: React.FC<TApp> = () => {
     return (
         <div className="container">
-         asdsadasd
+            <h1>Hello world</h1>
         </div>
     )
 }

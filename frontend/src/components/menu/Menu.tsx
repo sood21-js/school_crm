@@ -1,8 +1,6 @@
 import React from 'react';
 
-type TMenu = unknown
-
-export const Menu: React.FC<TMenu> = () => {
+export const Menu: React.FC = () => {
     const Num = 12
     return (
         <div className="container">
