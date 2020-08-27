@@ -9,9 +9,25 @@
   align-items: center;
   justify-items: center;
 
+  .auth__error{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .8rem;
+    min-height: 2rem;
+    margin-top: -2rem;
+    color: white;
+    width: 100%;
+    background-color: $error-red;
+
+    >div{
+      padding: 5px 10px;
+    }
+  }
+
   .auth__form {
     width: 300px;
-    height: 300px;
+    height: 330px;
     border-radius: 5px;
     background-color: $white;
     display: grid;
@@ -38,6 +54,7 @@
 
     .auth__input {
       width: 80%;
+      min-height: 102px;
     }
   }
 }
