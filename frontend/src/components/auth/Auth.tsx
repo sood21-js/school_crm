@@ -11,8 +11,7 @@ import { fetchAuth, clearAuth } from '../../redux/actions/auth'
 
 export default function Auth(){
     const dispatch = useDispatch();
-    const auth = useSelector((state: AppStateType): any => state.auth);
-    console.log(auth)
+    const {isFetching, error} = useSelector(({auth}: AppStateType): any => auth);
     const email = useInput('', 'email', ['required'])
     const password = useInput('', 'password', ['required'])
 
@@ -24,7 +23,7 @@ export default function Auth(){
     }
 
     useEffect(() => {
-        if (auth.error){
+        if (error){
             dispatch(clearAuth())
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -35,21 +34,21 @@ export default function Auth(){
     ])
 
     useEffect(() => {
-        if (auth.error?.data?.code === '000.011'){
-            auth.error.data.errors?.forEach((er: any) => {
+        if (error?.data?.code === '000.011'){
+            error.data.errors?.forEach((er: any) => {
                 if (er.param === 'email') email.changeError(er.msg)
                 if (er.param === 'password') password.changeError(er.msg)
             })
         }
-    }, [auth.error, dispatch, email, password])
+    }, [error, dispatch, email, password])
 
     return (
         <div className="auth__body">
             <div className="auth__form">
-                {auth.error?.data?.message && (
+                {error?.data?.message && (
                     <div className="auth__error">
                         <div>
-                            {auth.error?.data?.message}
+                            {error?.data?.message}
                         </div>
                     </div>
                 )}
@@ -71,7 +70,7 @@ export default function Auth(){
                         label="Email или Логин"
                         name="email"
                         autoComplete="email"
-                        disabled={auth.isFetching}
+                        disabled={isFetching}
                         {...email.bind}
                         onBlur={() => email.validate(['required'])}
                     />
@@ -86,7 +85,7 @@ export default function Auth(){
                         label="Пароль"
                         name="password"
                         autoComplete="password"
-                        disabled={auth.isFetching}
+                        disabled={isFetching}
                         {...password.bind}
                         onBlur={() => password.validate(['required'])}
                     />
@@ -97,10 +96,10 @@ export default function Auth(){
                         fullWidth
                         variant="contained"
                         color="primary"
-                        disabled={auth.isFetching}
+                        disabled={isFetching}
                         onClick={clickHandler}
                     >
-                        {auth.isFetching ? <CircularProgress size='24px'/> : 'Войти'}
+                        {isFetching ? <CircularProgress size='24px'/> : 'Войти'}
                     </Button>
                 </div>
                 
