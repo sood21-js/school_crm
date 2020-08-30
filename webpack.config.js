@@ -52,7 +52,7 @@ module.exports = {
         alias: {
             '@lib': path.resolve(__dirname, './frontend/src/lib'),
             '@style': path.resolve(__dirname, './frontend/src/styles'),
-            '@src': path.resolve(__dirname, './frontend/src'),
+            'src': path.resolve(__dirname, './frontend/src'),
             '@back': path.resolve(__dirname, './backend')
         },
         extensions: [".ts", ".tsx", ".js", ".jsx", ".css", ".scss"]

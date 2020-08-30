@@ -2,7 +2,7 @@ import {useState, useEffect, useCallback} from 'react'
 
 export type TUseInput = {
     bind: {
-        onChange: (e: any) => void,
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
         value: any,
         helperText: string | null,
         error: boolean
@@ -32,7 +32,7 @@ export function useInput(defaultValue: any, name: any, options: string[]):TUseIn
     }, [init, validate, value])
     
     //const regExp: RegExp = config.regexps[name]
-    const onChange = (e: any) => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInit(true)
         setValue(e.target.value)
     }

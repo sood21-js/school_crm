@@ -3,12 +3,11 @@ export const REQUEST_AUTH = "REQUEST_AUTH"
 export const CLEAR_AUTH = "CLEAR_AUTH"
 export const ERROR_AUTH = "ERROR_AUTH"
 
-export type TAuth = typeof AuthState
-const AuthState = {
-    isFetching: false,
-    error: null,
-    isSuccess: false,
-    data: null,
+export type TAuth = {
+    isFetching: boolean,
+    error: null | object,
+    isSuccess: boolean,
+    data: null | any
 }
 
 export type TLogin = {

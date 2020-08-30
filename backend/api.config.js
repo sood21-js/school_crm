@@ -7,5 +7,11 @@ module.exports = {
             useUnifiedTopology: true
         }
     },
-    jwtSecret: 'SchoolApp secret'
+    jwtSecret: 'SchoolApp secret',
+    session: {
+        name: 'sid',
+        secret: 'ssh!quiet,it\'asecret',
+        lifetime: 1000 * 60, //1 minute,
+        secure: process.env.NODE_ENV !== 'production'
+    },
 }

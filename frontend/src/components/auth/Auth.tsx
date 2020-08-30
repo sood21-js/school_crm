@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { AppStateType } from '../../redux/types/common_types'
 
@@ -12,10 +12,9 @@ import { fetchAuth, clearAuth } from '../../redux/actions/auth'
 export default function Auth(){
     const dispatch = useDispatch();
     const auth = useSelector((state: AppStateType): any => state.auth);
-    console.log(auth)
     const email = useInput('', 'email', ['required'])
     const password = useInput('', 'password', ['required'])
-
+    const [disableSubmiit, setDisableSubmit] = useState(true)
     const clickHandler = () => {
         dispatch(fetchAuth({
             email: email.getValue(), 
@@ -24,8 +23,11 @@ export default function Auth(){
     }
 
     useEffect(() => {
-        if (auth.error){
-            dispatch(clearAuth())
+        if (auth.error) dispatch(clearAuth())
+        console.log(email.bind.value || password.bind.value)
+        if (email.bind.value || password.bind.value) {
+            console.log('')
+            setDisableSubmit(false)
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
@@ -35,14 +37,17 @@ export default function Auth(){
     ])
 
     useEffect(() => {
-        if (auth.error?.data?.code === '000.011'){
-            auth.error.data.errors?.forEach((er: any) => {
-                if (er.param === 'email') email.changeError(er.msg)
-                if (er.param === 'password') password.changeError(er.msg)
-            })
+        if (auth.error){
+            setDisableSubmit(true)
+            if (auth.error?.data?.code === '000.011'){
+                auth.error.data.errors?.forEach((er: any) => {
+                    if (er.param === 'email') email.changeError(er.msg)
+                    if (er.param === 'password') password.changeError(er.msg)
+                })
+            }
         }
     }, [auth.error, dispatch, email, password])
-
+    console.log(disableSubmiit)
     return (
         <div className="auth__body">
             <div className="auth__form">
@@ -97,7 +102,7 @@ export default function Auth(){
                         fullWidth
                         variant="contained"
                         color="primary"
-                        disabled={auth.isFetching}
+                        disabled={auth.isFetching || disableSubmiit}
                         onClick={clickHandler}
                     >
                         {auth.isFetching ? <CircularProgress size='24px'/> : 'Войти'}
