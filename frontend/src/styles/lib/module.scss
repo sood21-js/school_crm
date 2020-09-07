@@ -8,3 +8,13 @@
   padding: 1rem;
   box-sizing: border-box;
 }
+
+.module__flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.module__text {
+  font-size: 1rem;
+}

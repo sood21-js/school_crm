@@ -1,0 +1,20 @@
+@import "../variables";
+
+.tabs {
+  padding-top: 2rem;
+}
+
+//change default material=ui style
+.MuiButtonGroup-root, .MuiButton-root{
+  color: $darken !important;
+}
+
+.MuiButton-outlined{
+  border-color: $darken !important;
+}
+
+.MuiButton-containedPrimary{
+  background-color: $btn-darken !important;
+  color: $lighten !important;
+}
+//change default material=ui style

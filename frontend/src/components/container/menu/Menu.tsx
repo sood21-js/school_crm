@@ -8,14 +8,14 @@ export const Menu: React.FC = () => {
                 ПАРТА
             </div>
             <div className="menu__table">
-                <NavLink exact to="/" >
+                <NavLink exact to="/" activeClassName="menu__item__active" >
                     <div className="menu__item">
                         <i className="far fa-user-circle"></i>
                     Профиль
                     </div>
                 </ NavLink>
                 
-                <NavLink exact to="/management" >
+                <NavLink exact to="/management" activeClassName="menu__item__active" >
                     <div className="menu__item">
                         <i className="fas fa-pencil-ruler"></i>
                     Управление
@@ -23,35 +23,35 @@ export const Menu: React.FC = () => {
                 </NavLink>
                 
 
-                <NavLink exact to="/classroom" >
+                <NavLink exact to="/classroom" activeClassName="menu__item__active" >
                     <div className="menu__item">
                         <i className="fas fa-user-graduate"></i>
                     Классы
                     </div>
                 </NavLink>
                 
-                <NavLink exact to={`/settings`} >
+                <NavLink exact to={`/settings`} activeClassName="menu__item__active">
                     <div className="menu__item">
                         <i className="fas fa-cogs"></i>
                     Администрация
                     </div>
                 </NavLink>
                 
-                <NavLink exact to={`/reports`} >
+                <NavLink exact to={`/reports`} activeClassName="menu__item__active">
                     <div className="menu__item">
                         <i className="fas fa-chart-line"></i>
                     Отчеты
                     </div>
                 </NavLink>
 
-                <NavLink exact to={`/libary`} >
+                <NavLink exact to={`/libary`} activeClassName="menu__item__active">
                     <div className="menu__item">
                         <i className="fas fa-book-reader"></i>
                     База знаний
                     </div>
                 </NavLink>
                 
-                <NavLink exact to={`/tasks`} >
+                <NavLink exact to={`/tasks`} activeClassName="menu__item__active">
                     <div className="menu__item">
                         <i className="fas fa-tasks"></i>
                     Задания
@@ -59,7 +59,7 @@ export const Menu: React.FC = () => {
                 </NavLink>
                 
 
-                <NavLink exact to={`/logout`} >
+                <NavLink exact to={`/logout`} activeClassName="menu__item__active">
                     <div className="menu__item">
                         <i className="fas fa-sign-out-alt"></i>
                     Выход

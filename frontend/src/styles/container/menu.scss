@@ -40,6 +40,10 @@
       }
     }
 
+    .menu__item__active {
+      color: $menu-color-active;
+    }
+
     .menu__item:hover {
       background-color: $menu-bg-hover;
     }

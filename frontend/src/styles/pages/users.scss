@@ -1,0 +1,27 @@
+@import "../variables";
+
+h3 {
+  margin: 0;
+}
+
+i {
+  margin-right: 0.3rem;
+}
+
+.users__title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.users__btn {
+  margin-left: 1rem;
+}
+
+.user__block {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: .5rem;
+}

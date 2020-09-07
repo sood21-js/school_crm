@@ -17,9 +17,11 @@ export const fetchAuth = (data: ILogin) => (dispatch: Dispatch<ActionsTypes>) =>
             dispatch(receiveAuth(resuilt.data))
         })
         .catch((error: any) => {
-            console.log(error)
+            console.log(error.response)
             dispatch(errorAuth({
-                data: error.response?.data,
+                data: error.response?.status !== 404
+                    ? error.response?.data
+                    : { message: 'Сервер не отвечает, попробуйте повторить запрос позже'},
                 status: error.response?.status
             }))
         })

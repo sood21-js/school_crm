@@ -2,13 +2,21 @@ $white: rgba(255, 255, 255, 0.952);
 $green: rgba(10, 85, 14, 0.479);
 $error-red: #d80606;
 
+
+$darken: #2c3e50;
+$btn-darken: #2c3e50e0;
+$very-darken: #22303e;
+
+$lighten: #ffffff;
+
 //menu
-$menu-bg: #2c3e50;
-$menu-bg-hover: #22303e;
+$menu-bg: $darken;
+$menu-bg-hover: $very-darken;
+$menu-color-active: #d6eb1c;
 
 //page
 $bg-page: #edf4fa;
 
 //module
 $border-module: #dadada;
-$bg-module: #ffffff;
+$bg-module: $lighten;
