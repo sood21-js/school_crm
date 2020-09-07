@@ -1,0 +1,47 @@
+@import "../variables";
+
+.menu {
+  background-color: $menu-bg;
+  color: $white;
+
+  .menu__logo {
+    margin: 2rem 1rem;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 2rem;
+    font-weight: 100;
+    border: 1px solid $white;
+  }
+
+  .menu__table {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    a {
+      color: $white;
+      text-decoration: none;
+      width: 100%;
+    }
+
+    .menu__item {
+      height: 50px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 1rem;
+      padding: 0 1rem;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+
+      i {
+        padding-right: 1rem;
+      }
+    }
+
+    .menu__item:hover {
+      background-color: $menu-bg-hover;
+    }
+  }
+}
