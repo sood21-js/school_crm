@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { AppStateType } from '../../redux/types/common_types'
+import { AppStateType } from '../../../redux/types/common_types'
 
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
-import {useInput} from '../../hooks/useInput'
-import { fetchAuth, clearAuth } from '../../redux/actions/auth'
+import {useInput} from '../../../hooks/useInput'
+import { fetchAuth, clearAuth } from '../../../redux/actions/auth'
+import { TAuth } from 'frontend/src/redux/types/auth'
 
-export default function Auth(){
+export function AuthPage(){
     const dispatch = useDispatch();
-    const auth = useSelector((state: AppStateType): any => state.auth);
+    const auth = useSelector((state: AppStateType): TAuth => state.auth);
     const email = useInput('', 'email', ['required'])
     const password = useInput('', 'password', ['required'])
     const [disableSubmiit, setDisableSubmit] = useState(true)
-    const clickHandler = () => {
+
+    const submitHandler = () => {
         dispatch(fetchAuth({
             email: email.getValue(), 
             password: password.getValue()
@@ -23,16 +25,14 @@ export default function Auth(){
     }
 
     useEffect(() => {
-        if (auth.error) dispatch(clearAuth())
-        console.log(email.bind.value || password.bind.value)
         if (email.bind.value || password.bind.value) {
-            console.log('')
             setDisableSubmit(false)
         }
+        if (auth.error) dispatch(clearAuth())
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
-        dispatch,
-        email.bind.value,
+        dispatch, 
+        email.bind.value, 
         password.bind.value
     ])
 
@@ -40,14 +40,20 @@ export default function Auth(){
         if (auth.error){
             setDisableSubmit(true)
             if (auth.error?.data?.code === '000.011'){
+                console.log(auth.error)
                 auth.error.data.errors?.forEach((er: any) => {
                     if (er.param === 'email') email.changeError(er.msg)
                     if (er.param === 'password') password.changeError(er.msg)
                 })
             }
+            
         }
     }, [auth.error, dispatch, email, password])
-    console.log(disableSubmiit)
+
+    const keyUpHandler = (e: React.KeyboardEvent) => {
+        if (e.keyCode === 13) submitHandler()
+    }
+
     return (
         <div className="auth__body">
             <div className="auth__form">
@@ -78,6 +84,7 @@ export default function Auth(){
                         autoComplete="email"
                         disabled={auth.isFetching}
                         {...email.bind}
+                        onKeyUp={keyUpHandler}
                         onBlur={() => email.validate(['required'])}
                     />
                 </div>
@@ -93,6 +100,7 @@ export default function Auth(){
                         autoComplete="password"
                         disabled={auth.isFetching}
                         {...password.bind}
+                        onKeyUp={keyUpHandler}
                         onBlur={() => password.validate(['required'])}
                     />
                 </div>
@@ -103,7 +111,7 @@ export default function Auth(){
                         variant="contained"
                         color="primary"
                         disabled={auth.isFetching || disableSubmiit}
-                        onClick={clickHandler}
+                        onClick={submitHandler}
                     >
                         {auth.isFetching ? <CircularProgress size='24px'/> : 'Войти'}
                     </Button>

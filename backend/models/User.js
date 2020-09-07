@@ -7,6 +7,7 @@ const userScheme = new Schema({
     id: { type: Types.ObjectId },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    cookie: { type: String }
 });
 
 const User = model("User", userScheme);
@@ -32,12 +33,15 @@ module.exports.findById = async (id) => {
     return user
 }
 
-module.exports.findOne = async ({ email, password}) => {
+module.exports.findOne = async ({ email, password }) => {
     mongoose.connect(config.mongoose.url, config.mongoose.options)
     const user = await User.findOne({ email })
-    if (user){
+    if (user) {
         const isMatch = await bcrypt.compare(password, user.password)
-        if (isMatch) return user 
+        if (isMatch) {
+            await mongoose.disconnect()
+            return user
+        }
     }
     await mongoose.disconnect()
     return false

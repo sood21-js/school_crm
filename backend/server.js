@@ -20,7 +20,7 @@ app
     .use(express.static(path.join(__dirname, '../dist')))
     .use(express.static(path.join(__dirname, '../frontend/src')))
     .use(bodyParser())
-    .use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}))
+    .use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 } }))
     .use(cookieParser())
     .use(session({
         name: config.session.name,
@@ -30,27 +30,14 @@ app
         cookie: {
             maxAge: config.session.lifetime,
             semaSite: true,
-        },
-        USER_ID: null,
-        TOKEN: null
+        }
     }))
 
 app.use('/auth', authRoutes)
 app.use('/profile', profileRoutes)
-app.use('/*', function (req, res) {
+app.get('/*', function (req, res) {
     console.log(req.session)
-    if (req.session.USER_ID) {
-        const json = { 
-            token: req.session.TOKEN, 
-            userId: req.session.USER_ID, 
-            isAuth: true 
-        }
-        console.log(json)
-        res
-            .sendFile(path.join(__dirname, '../dist', 'index.html'))
-            .json(json)
-    }
-    else res.sendFile(path.join(__dirname, '../dist', 'index.html'))
+    res.sendFile(path.join(__dirname, '../dist', 'index.html'))
 });
 
 app.listen(PORT);

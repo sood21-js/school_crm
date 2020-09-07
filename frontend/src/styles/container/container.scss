@@ -1,0 +1,8 @@
+@import "menu";
+@import "content";
+
+.container{
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+}

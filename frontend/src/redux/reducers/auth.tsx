@@ -1,10 +1,5 @@
-import { TInitialState, defaultState, TResponseError } from "../types/common_types"
-import { RECEIVE_AUTH, TAuth, REQUEST_AUTH, CLEAR_AUTH, ERROR_AUTH } from "../types/auth"
-
-type TRequestAuth = { type: typeof REQUEST_AUTH }
-type TReceiveAuth = { type: typeof RECEIVE_AUTH, data: TAuth }
-type TClearAuth = { type: typeof CLEAR_AUTH }
-type TErrorAuth = { type: typeof ERROR_AUTH, error: TResponseError }
+import { TInitialState, defaultState } from "../types/common_types"
+import { TReceiveAuth, TRequestAuth, TClearAuth, TErrorAuth } from "../types/auth";
 
 type TAction = TReceiveAuth | TRequestAuth | TClearAuth | TErrorAuth
 
