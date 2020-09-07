@@ -1,6 +1,9 @@
+@import '../variables';
+
 .content {
   box-sizing: border-box;
   padding: 2rem;
+  background-color: $bg-page;
 
   h1 {
     font-weight: 300;

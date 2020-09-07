@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { BrowserRouter, Redirect, Switch, Route } from 'react-router-dom'
+import { BrowserRouter, Redirect, Route } from 'react-router-dom'
 
 import { TAuth } from '../redux/types/auth'
 
@@ -8,9 +8,6 @@ import { AppStateType } from '../redux/types/common_types'
 import { Container } from './container/Container'
 import {AuthPage} from '../components/pages/auth/Auth'
 import { fetchAuth } from '../redux/actions/auth'
-
-import {createBrowserHistory} from 'history'
-const history = createBrowserHistory()
 
 type TApp = unknown
 

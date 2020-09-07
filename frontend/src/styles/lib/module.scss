@@ -1,0 +1,10 @@
+@import "../variables";
+
+.module {
+  background-color: $bg-module;
+  border: 1px solid $border-module;
+  width: 100%;
+  margin-top: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
+}

@@ -6,11 +6,10 @@
         "dom.iterable",
         "esnext"
       ],
-      "baseUrl": "./",
+      "baseUrl": "./frontend",
       "paths": {
-        "src/*": [
-          ".frontend/src/*"
-        ]
+        "#src/*": ["src/*"],
+        "#libs/*": ["src/libs/*"]
       },
       "allowJs": true,
       "skipLibCheck": true,

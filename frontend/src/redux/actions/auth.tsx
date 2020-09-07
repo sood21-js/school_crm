@@ -1,6 +1,6 @@
 import { RECEIVE_AUTH, REQUEST_AUTH, CLEAR_AUTH, ERROR_AUTH, ILogin, ActionsTypes } from '../types/auth'
 import { TResponseError, TResponse } from '../types/common_types'
-import { fetchApi } from '../../lib/net/fetch'
+import { fetchApi } from '../../libs/net/fetch'
 import config from '../../config.app'
 import { Dispatch } from 'redux';
 
