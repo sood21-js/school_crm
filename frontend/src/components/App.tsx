@@ -23,7 +23,7 @@ export const App: React.FC<TApp> = () => {
     return (
         <>
             <BrowserRouter>
-                {isAuth ? <Container /> : (
+                {!isAuth ? <Container /> : (
                     <>
                         <Route exact path="/">
                             <AuthPage />

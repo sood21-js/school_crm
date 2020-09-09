@@ -2,18 +2,12 @@ import React from 'react';
 
 export interface IText {
     children: React.ReactNode
-    margin?: string
-    marginTop?: string
-    marginLeft?: string
-    marginRight?: string
-    marginBottom?: string
-    textAlign?: 'left' | 'center' | 'right'
-    fontSize?: string | '1rem'
+    modifier?: string
 }
 
-export const Text: React.FC<IText> = ({children, ...args}: any) => {
+export const Text: React.FC<IText> = ({children, modifier, ...args}: IText) => {
     return (
-        <div className='module__text' style={args}>
+        <div className={`module__text ${modifier || ''}`} style={args}>
             {children}
         </div>
     )

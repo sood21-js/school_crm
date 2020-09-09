@@ -1,5 +1,7 @@
 @import "../variables";
 
+h1,
+h2,
 h3 {
   margin: 0;
 }
@@ -19,9 +21,26 @@ i {
 }
 
 .user__block {
-  display: flex;
+  display: grid;
+  grid-template-columns: 200px 200px;
   width: 100%;
   align-items: center;
-  justify-content: flex-end;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
+  align-items: baseline;
+}
+
+.user__block__text {
+  text-align: right;
+  margin-right: 1rem;
+  font-size: .9rem;
+}
+
+.user__block__title {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.user__block__title__h2{
+  text-transform: uppercase;
 }

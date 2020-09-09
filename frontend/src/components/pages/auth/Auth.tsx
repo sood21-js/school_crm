@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { AppStateType } from '../../../redux/types/common_types'
 
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
-import {useInput} from '../../../hooks/useInput'
-import { fetchAuth, clearAuth } from '../../../redux/actions/auth'
-import { TAuth } from 'frontend/src/redux/types/auth'
+import {useInput} from '#src/hooks/useInput'
+import { fetchAuth, clearAuth } from '#src/redux/actions/auth'
+import { TAuth } from '#src/redux/types/auth'
+import { AppStateType } from '#src/redux/types/common_types'
 
 export function AuthPage(){
     const dispatch = useDispatch();
@@ -85,7 +85,7 @@ export function AuthPage(){
                         disabled={auth.isFetching}
                         {...email.bind}
                         onKeyUp={keyUpHandler}
-                        onBlur={() => email.validate(['required'])}
+                        onBlur={email.validate}
                     />
                 </div>
                 <div className="auth__input">
@@ -101,7 +101,7 @@ export function AuthPage(){
                         disabled={auth.isFetching}
                         {...password.bind}
                         onKeyUp={keyUpHandler}
-                        onBlur={() => password.validate(['required'])}
+                        onBlur={email.validate}
                     />
                 </div>
                 <div className="auth__input">
