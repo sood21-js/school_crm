@@ -15,6 +15,49 @@
   justify-content: center;
 }
 
+.module__grid {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  grid-template-columns: 1fr;
+}
+
 .module__text {
   font-size: 1rem;
+}
+
+.module__border {
+  border-bottom: 1px solid $border-module;
+}
+
+.module__name {
+  justify-content: start;
+  grid-template-columns: 1fr;
+  align-items: start;
+  margin: 1rem 0;
+}
+
+.module__mb2{
+  margin-bottom: 2rem;
+}
+
+//checkbox color
+.MuiCheckbox-colorPrimary.Mui-checked{
+  color: $darken !important;
+}
+
+//change input material-ui input color
+.MuiFormLabel-root.Mui-focused{
+  color: $darken !important;
+}
+.MuiOutlinedInput-root.Mui-focused
+.MuiOutlinedInput-notchedOutline{
+  border-color: $darken !important;
+}
+//change input material-ui input color
+
+@media screen and (max-width: 800px) {
+  .module__name {
+    grid-template-columns: 1fr;
+  }
 }

@@ -7,7 +7,7 @@ export type TUseInput = {
         helperText: string | null,
         error: boolean
     },
-    validate: (options: string[]) => void,
+    validate: () => void,
     changeError: (text: string) => void,
     getValue: () => string
 }
@@ -19,12 +19,15 @@ export function useInput(defaultValue: any, name: any, options: string[]):TUseIn
     const [init, setInit] = useState(false)
 
     const validate = useCallback(() => {
+        let valid = true
         setInit(true)
         options.forEach( (opt: string) => {
             if (opt === 'required' && !value){
                 setError('Обязательное поле')
+                valid = false
             } else setError('')
         })
+        return valid
     }, [options, value])
 
     useEffect(() => {
