@@ -5,9 +5,11 @@ import { createBrowserHistory } from 'history'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 import auth from './reducers/auth';
+import profile from './reducers/profile';
 
 const rootReducers = combineReducers({ 
-    auth
+    auth,
+    profile
 })
 export type RootReducerType = typeof rootReducers
 
@@ -21,7 +23,8 @@ const middleware = [
 const store = createStore(
     rootReducers,
     composeWithDevTools(applyMiddleware(...middleware))
-);
+)
+
 //@ts-ignore
 window.store = store
 

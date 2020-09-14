@@ -21,9 +21,11 @@ export const UsersList: React.FC<TUsersList> = ({changeMode}: any) => {
                     onClick={clickHandler}
                     variant='outlined'
                     size='small'
+                    content="Создать пользователя"
+                    icon="fas fa-user-plus"
                 >
-                    <i className="fas fa-user-plus"></i>
-                    Создать пользователя
+                    
+                    
                 </Button>
             </div>
             <hr />

@@ -1,14 +1,19 @@
 import { RootReducerType } from "../redux_strore"
 
 export type AppStateType = ReturnType<RootReducerType>
-//export type TDispatch = Dispatch<AppStateType>
 
-export type TInitialState = typeof defaultState
 export const defaultState = {
     isFetching: false,
     error: null,
     isSuccess: false,
     data: null,
+}
+
+export type TState = {
+    isFetching: boolean,
+    error: any,
+    isSuccess: boolean,
+    data: any,
 }
 
 export type TResponseError = {
@@ -19,3 +24,7 @@ export type TResponseError = {
 export type TResponse = {
     data: any
 }
+
+export type TFetchMethod = 'get' | 'add' | 'put' | 'delete'
+
+

@@ -1,9 +1,10 @@
-import { TInitialState, defaultState } from "../types/common_types"
-import { TReceiveAuth, TRequestAuth, TClearAuth, TErrorAuth } from "../types/auth";
+import { TState, defaultState } from "../types/common_types"
+import { ActionsTypes } from "../types/auth";
 
-type TAction = TReceiveAuth | TRequestAuth | TClearAuth | TErrorAuth
-
-export default function authReducer(state: TInitialState = defaultState, action: TAction) {
+export default function authReducer(
+    state: TState = defaultState, 
+    action: ActionsTypes
+) {
     
     console.log(state, action)
 

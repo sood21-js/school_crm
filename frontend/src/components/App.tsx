@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { BrowserRouter, Redirect, Route } from 'react-router-dom'
 
-import { TAuth } from '../redux/types/auth'
+import { TState } from '../redux/types/common_types'
 
 import { AppStateType } from '../redux/types/common_types'
 import { Container } from './container/Container'
@@ -17,7 +17,7 @@ export const App: React.FC<TApp> = () => {
         dispatch(fetchAuth({}))
     }, [dispatch])
     
-    const auth = useSelector((state: AppStateType): TAuth => state.auth)
+    const auth = useSelector((state: AppStateType): TState => state.auth)
     const isAuth = auth.data?.isAuth
 
     return (

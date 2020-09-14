@@ -8,6 +8,7 @@
 //components
 @import './lib/module';
 @import './lib/tabs';
+@import './lib/button.scss';
 
 //pages
 @import './pages/auth';
@@ -23,4 +24,8 @@ body {
 body {
   font-family: 'Roboto', sans-serif;
   font-size: 12px;
+}
+
+.ml05{
+  margin-left: .5rem;
 }

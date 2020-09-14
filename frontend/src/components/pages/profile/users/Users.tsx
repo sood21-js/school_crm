@@ -5,7 +5,7 @@ import { EditUser } from './EditUser';
 
 export type TMode = 'users_list' | 'edit_user'
 type TUsers = {
-    disableButtons: (mode: string) => void
+    disableButtons: (mode: boolean) => void
 }
 
 export const Users: React.FC<TUsers> = ({disableButtons}: TUsers) =>{
@@ -15,8 +15,8 @@ export const Users: React.FC<TUsers> = ({disableButtons}: TUsers) =>{
     const clickHandler = (mode: TMode) => {
         setMode(mode)
         if (mode === 'edit_user'){
-            disableButtons('edit_user')
-        }
+            disableButtons(true)
+        } else disableButtons(false)
     }
     console.log(mode)
     return (

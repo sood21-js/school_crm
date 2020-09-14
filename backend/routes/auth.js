@@ -20,7 +20,7 @@ router.post(
 router.post(
     '/login',
     [
-        check('email', 'Введите корректный email').isEmail(),
+        check('email', 'Введите корректный email или логин').exists(),
         check('password', 'Введите пароль').exists()
     ],
     controller.login

@@ -1,25 +1,13 @@
-import {receiveAuth, requestAuth, clearAuth, errorAuth} from '../actions/auth' 
+import {receiveProfile, requestProfile, clearProfile, errorProfile} from '../actions/profile' 
 
-export const RECEIVE_AUTH = "RECEIVE_AUTH"
-export const REQUEST_AUTH = "REQUEST_AUTH"
-export const CLEAR_AUTH = "CLEAR_AUTH"
-export const ERROR_AUTH = "ERROR_AUTH"
+export const RECEIVE_PROFILE = "RECEIVE_PROFILE"
+export const REQUEST_PROFILE = "REQUEST_PROFILE"
+export const CLEAR_PROFILE = "CLEAR_PROFILE"
+export const ERROR_PROFILE = "ERROR_PROFILE"
 
-export type TAuth = {
-    isFetching: boolean,
-    error: null | any,
-    isSuccess: boolean,
-    data: null | any
-}
+export type TRequest = ReturnType<typeof requestProfile>
+export type TReceive = ReturnType<typeof receiveProfile>
+export type TClear = ReturnType<typeof clearProfile>
+export type TError = ReturnType<typeof errorProfile>
 
-export interface ILogin {
-    email?: string,
-    password?: string
-}
-
-export type TRequestAuth = ReturnType<typeof requestAuth>
-export type TReceiveAuth = ReturnType<typeof receiveAuth>
-export type TClearAuth = ReturnType<typeof clearAuth>
-export type TErrorAuth = ReturnType<typeof errorAuth>
-
-export type ActionsTypes = TRequestAuth | TReceiveAuth | TClearAuth | TErrorAuth
+export type ActionsTypes = TRequest | TReceive | TClear | TError

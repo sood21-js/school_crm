@@ -2,9 +2,16 @@ const config = {
     devServer: {
         port: 4200
     },
+    cookie:{
+        maxAge: 3600,
+        name: 'school_auth',
+        secure: false,
+        httpOnly: false
+    },
     url: {
         login: `/auth/login`,
-        register: `/auth/register`
+        register: `/auth/register`,
+        profile: '/profile/'
     },
     regexps: {
         companyName: /[^A-Za-z- ']/gm,

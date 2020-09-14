@@ -3,27 +3,33 @@ const mongoose = require("mongoose")
 const { Schema, model, Types } = mongoose
 const config = require("../api.config")
 
-const userScheme = new Schema({
+const scheme = new Schema({
     id: { type: Types.ObjectId },
+    login: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    cookie: { type: String }
 });
 
-const User = model("User", userScheme);
+const User = model("User", scheme);
 
-module.exports.save = async ({ email }) => {
-    const user = await User.findOne({ email })
-    if (user) {
+module.exports.save = async ({ login, email, password }) => {
+    mongoose.connect(config.mongoose.url, config.mongoose.options)
+    const userEmail = await User.findOne({ email })
+    if (userEmail) {
+        await mongoose.disconnect()
+        return false
+    }
+    const userLogin = await User.findOne({ login })
+    if (userLogin) {
         await mongoose.disconnect()
         return false
     }
 
     const hashedPassword = await bcrypt.hash(password, 12)
-    const newUser = new User({ email, password: hashedPassword })
+    const newUser = new User({ login, email, password: hashedPassword })
     await newUser.save()
     await mongoose.disconnect()
-    return true
+    return newUser
 }
 
 module.exports.findById = async (id) => {
@@ -35,7 +41,10 @@ module.exports.findById = async (id) => {
 
 module.exports.findOne = async ({ email, password }) => {
     mongoose.connect(config.mongoose.url, config.mongoose.options)
-    const user = await User.findOne({ email })
+    let user = await User.findOne({ email })
+    if (!user) {
+        user = await User.findOne({ login: email })
+    }
     if (user) {
         const isMatch = await bcrypt.compare(password, user.password)
         if (isMatch) {
@@ -45,4 +54,19 @@ module.exports.findOne = async ({ email, password }) => {
     }
     await mongoose.disconnect()
     return false
+}
+
+module.exports.update = async (data) => {
+    const { _id } = data
+    mongoose.connect(config.mongoose.url, config.mongoose.options)
+    const result = await User.updateOne({ _id }, data)
+    await mongoose.disconnect()
+    return result
+}
+
+module.exports.delete = async (_id) => {
+    mongoose.connect(config.mongoose.url, config.mongoose.options)
+    const result = await User.findOneAndDelete({ _id })
+    await mongoose.disconnect()
+    return result
 }

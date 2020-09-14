@@ -1,21 +1,22 @@
-/* import { TInitialState, defaultState } from "../types/common_types"
-import { TReceiveAuth, TRequestAuth, TClearAuth, TErrorAuth } from "../types/auth";
+import { TState, defaultState } from "../types/common_types"
+import { ActionsTypes } from "../types/profile"
 
-type TAction = TReceiveAuth | TRequestAuth | TClearAuth | TErrorAuth
-
-export default function profileReducer(state: TInitialState = defaultState, action: TAction) {
+export default function profileReducer(
+    state: TState = defaultState, 
+    action: ActionsTypes
+) {
     
     console.log(state, action)
 
     switch (action.type) {
-    case "REQUEST_PROFILE_DATA":
+    case "REQUEST_PROFILE":
         return { 
             ...state, 
             isFetching: true,
             error: null,
             isSuccess: false
         };
-    case "RECEIVE_PROFILE_DATA":
+    case "RECEIVE_PROFILE":
         return { 
             ...state,
             isFetching: false,
@@ -23,9 +24,9 @@ export default function profileReducer(state: TInitialState = defaultState, acti
             data: action.data,
             isSuccess: true,
         };
-    case "CLEAR_PROFILE_DATA":
+    case "CLEAR_PROFILE":
         return { ...state, ...defaultState}
-    case "ERROR_PROFILE_DATA":
+    case "ERROR_PROFILE":
         return { 
             ...state,
             isFetching: false,
@@ -35,4 +36,4 @@ export default function profileReducer(state: TInitialState = defaultState, acti
     default:
         return state;
     }
-} */
+}

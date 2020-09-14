@@ -9,10 +9,18 @@ export type TUseInput = {
     },
     validate: () => void,
     changeError: (text: string) => void,
-    getValue: () => string
+    getValue: () => string,
+    setDefaultValue: () => void,
 }
 
-export function useInput(defaultValue: any, name: any, options: string[]):TUseInput {
+type TOptions = {
+    required?: boolean,
+    minLength?: number,
+    maxLength?: number,
+    phone?: boolean
+}
+
+export function useInput(defaultValue: any, name: any, options: TOptions):TUseInput {
 
     const [value, setValue] = useState(defaultValue)
     const [error, setError] = useState('')
@@ -21,11 +29,36 @@ export function useInput(defaultValue: any, name: any, options: string[]):TUseIn
     const validate = useCallback(() => {
         let valid = true
         setInit(true)
-        options.forEach( (opt: string) => {
-            if (opt === 'required' && !value){
-                setError('Обязательное поле')
-                valid = false
-            } else setError('')
+        setError('')
+        Object.keys(options).forEach((key: any) => {
+            switch (key) {
+            case 'required':
+                if (key === 'required' && !value){
+                    setError('Обязательное поле')
+                    valid = false
+                }
+                break;
+            case 'minLength': 
+                if (options.minLength && options.minLength > value.length){
+                    setError(`Минимальное число символов ${options.minLength}`)
+                    valid = false
+                }
+                break
+            case 'maxLength':
+                if (options.maxLength && options.maxLength < value.length){
+                    setError(`Максимальное число символов ${options.maxLength}`)
+                    valid = false
+                }
+                break
+            case 'phone':
+                if (value.length > 0 && value.length !== 18){
+                    setError(`Некорректный номер`)
+                    valid = false
+                }
+                break
+            default: 
+                setError('')
+            }
         })
         return valid
     }, [options, value])
@@ -44,6 +77,11 @@ export function useInput(defaultValue: any, name: any, options: string[]):TUseIn
 
     const getValue = () => value
 
+    const setDefaultValue = () => {
+        setInit(false)
+        setValue('')
+    }
+
     const result = { 
         bind: {
             onChange, 
@@ -53,7 +91,8 @@ export function useInput(defaultValue: any, name: any, options: string[]):TUseIn
         },
         validate,
         changeError,
-        getValue
+        getValue,
+        setDefaultValue
     }
     return result
 }

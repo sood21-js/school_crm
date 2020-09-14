@@ -32,9 +32,8 @@ export const Tabs: React.FC<ITabs> = ({btns, options, onClick}: ITabs) => {
                         key={Math.random()}
                         {...button.options}
                         onClick={() => onClick(button.name)}
-                    >
-                        {button.title}
-                    </Button>
+                        content={button.title}
+                    />
                 ))}
             </ButtonGroup>
         </div> 

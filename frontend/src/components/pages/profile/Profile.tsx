@@ -50,15 +50,13 @@ export function ProfilePage(){
         setTabs(newTanbs)
     }
 
-    const disableButtons = (mode: string) => {
-        if (mode === 'edit_user'){
-            setTabs({
-                ...tabs,
-                btns: tabs.btns.map((btn: IBtn) => {
-                    return {...btn, options: {...btn.options,disabled: true}} as IBtn
-                })
+    const disableButtons = (disabled: boolean) => {
+        setTabs({
+            ...tabs,
+            btns: tabs.btns.map((btn: IBtn) => {
+                return {...btn, options: {...btn.options,disabled}} as IBtn
             })
-        }
+        })
     }
 
     return (

@@ -7,14 +7,14 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 
 import {useInput} from '#src/hooks/useInput'
 import { fetchAuth, clearAuth } from '#src/redux/actions/auth'
-import { TAuth } from '#src/redux/types/auth'
+import { TState } from '#src/redux/types/common_types'
 import { AppStateType } from '#src/redux/types/common_types'
 
 export function AuthPage(){
     const dispatch = useDispatch();
-    const auth = useSelector((state: AppStateType): TAuth => state.auth);
-    const email = useInput('', 'email', ['required'])
-    const password = useInput('', 'password', ['required'])
+    const auth = useSelector((state: AppStateType): TState => state.auth);
+    const email = useInput('', 'email', {required: true})
+    const password = useInput('', 'password', {required: true})
     const [disableSubmiit, setDisableSubmit] = useState(true)
 
     const submitHandler = () => {
@@ -40,7 +40,6 @@ export function AuthPage(){
         if (auth.error){
             setDisableSubmit(true)
             if (auth.error?.data?.code === '000.011'){
-                console.log(auth.error)
                 auth.error.data.errors?.forEach((er: any) => {
                     if (er.param === 'email') email.changeError(er.msg)
                     if (er.param === 'password') password.changeError(er.msg)

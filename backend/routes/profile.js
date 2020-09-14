@@ -1,11 +1,11 @@
 const { Router } = require('express')
 const controller = require('../controllers/profile')
-const passport = require('passport')
 
-//const Profile = require('../models/Profile')
 const router = Router()
-
-// /profile
-router.post('/', passport.authenticate('jwt', {session: false}), controller.getProfile)
+router.post('/get_all', controller.getAll)
+router.post('/get', controller.get)
+router.post('/put', controller.put)
+router.post('/delete', controller.delete)
+router.post('/add', controller.add)
 
 module.exports = router

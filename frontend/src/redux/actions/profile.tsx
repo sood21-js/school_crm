@@ -1,28 +1,36 @@
-/* import { RECEIVE_AUTH, REQUEST_AUTH, CLEAR_AUTH, ERROR_AUTH, ILogin, ActionsTypes } from '../types/auth'
-import { TResponseError, TResponse } from '../types/common_types'
+import {
+    RECEIVE_PROFILE,
+    REQUEST_PROFILE,
+    CLEAR_PROFILE,
+    ERROR_PROFILE,
+    ActionsTypes 
+} from '../types/profile'
+import { TResponseError, TResponse, TFetchMethod } from '../types/common_types'
 import { fetchApi } from '../../libs/net/fetch'
 import config from '../../config.app'
 import { Dispatch } from 'redux';
+import { reload } from '#src/common/reload';
 
-export const receiveAuth = (data: unknown) => ({ type: RECEIVE_AUTH, data } as const);
-export const requestAuth = () => ({ type: REQUEST_AUTH } as const);
-export const clearAuth = () => ({ type: CLEAR_AUTH } as const);
-export const errorAuth = (error: TResponseError) => ({ type: ERROR_AUTH, error } as const);
+export const receiveProfile = (data: unknown) => ({ type: RECEIVE_PROFILE, data } as const);
+export const requestProfile = () => ({ type: REQUEST_PROFILE } as const);
+export const clearProfile = () => ({ type: CLEAR_PROFILE } as const);
+export const errorProfile = (error: TResponseError) => ({ type: ERROR_PROFILE, error } as const); 
 
-export const fetchProfile = (data: ILogin) => (dispatch: Dispatch<ActionsTypes>) => {
-    dispatch(requestAuth())
-    return fetchApi(data, config.url.login)
+export const fetchProfile = (data: any, method: TFetchMethod = 'get') => (dispatch: Dispatch<ActionsTypes>) => {
+    dispatch(requestProfile())
+    return fetchApi(data, `${config.url.profile}${method}`)
         .then((resuilt: TResponse) => {
             console.log(resuilt)
-            dispatch(receiveAuth(resuilt.data))
+            dispatch(receiveProfile(resuilt.data))
         })
         .catch((error: any) => {
             console.log(error.response)
-            dispatch(errorAuth({
+            dispatch(errorProfile({
                 data: error.response?.status !== 404
                     ? error.response?.data
                     : { message: 'Сервер не отвечает, попробуйте повторить запрос позже'},
                 status: error.response?.status
             }))
+            reload(error)
         })
-} */
+}

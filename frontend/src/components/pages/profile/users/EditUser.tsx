@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Module } from '#src/libs/components/Module';
 import { Button } from '#src/libs/components/Button';
@@ -10,33 +11,45 @@ import { Input } from '#src/libs/components/Input';
 import { Selection } from '#src/libs/components/Select';
 
 import config from '#src/config.app';
-import {getDefaultUser} from './helpers';
+import {getDefaultUser, setDefaultUseInputValue} from './helpers';
+import { useInput } from '#src/hooks/useInput';
+import { fetchProfile } from '#src/redux/actions/profile';
 
 import { IUser } from '#src/redux/types/users';
 import { CheckBox } from '#src/libs/components/CheckBox';
-import { useInput } from '#src/hooks/useInput';
-import { fetchAuth } from '#src/redux/actions/auth';
+import { AppStateType, TState } from '#src/redux/types/common_types';
+import { Message } from '#src/libs/components/Message';
+
 
 type TEditUser = {
     changeMode: (mode: TMode) => void
 }
 
 export const EditUser: React.FC<TEditUser> = ({changeMode}: TEditUser) =>{
-    const [user, setUser] = useState<IUser>(getDefaultUser())
     
+    const dispatch = useDispatch();
+    const profile = useSelector((state: AppStateType): TState => state.profile);
+    const [user, setUser] = useState<IUser>(getDefaultUser())
+    const [message, setMessage] = useState({
+        show: false, 
+        status: 'primary', 
+        text: ''
+    })
+
     const changeHandler = (v: any, field: string) => {
         setUser({...user, [field]: v})
     }
 
     const textFieldData = {
-        name: useInput('', 'name', ['required']),
-        middleName: useInput('', 'middleName', ['required']),
-        lastName: useInput('', 'lastName', ['required']),
-        login: useInput('', 'login', ['required']),
-        password: useInput('', 'password', ['required']),
-        email: useInput('', 'email', ['required']),
-        position: useInput('', 'position', []),
-        education: useInput('', 'education', []),
+        name: useInput('', 'name', {required: true, maxLength: 20}),
+        middleName: useInput('', 'middleName', {required: true, maxLength: 20}),
+        lastName: useInput('', 'lastName',  {required: true, maxLength: 20}),
+        login: useInput('', 'login',  {required: true}),
+        password: useInput('', 'password',  {required: true, minLength: 6}),
+        phone: useInput('', 'phone', {phone: true}),
+        email: useInput('', 'email',  {required: true}),
+        position: useInput('', 'position', {}),
+        education: useInput('', 'education', {}),
     }
 
     const checkValidate = (data: any) => {
@@ -46,19 +59,48 @@ export const EditUser: React.FC<TEditUser> = ({changeMode}: TEditUser) =>{
             if (!valid) formValid = false
         })
         return formValid
-    }   
+    }
+    
     const saveHandler = () => {
         const newUser = { ...user }
         if (checkValidate(textFieldData)){
             Object.keys(textFieldData).forEach((key) => {
-                (user as any)[key] = (textFieldData as any)[key].getValue()
+                (newUser as any)[key] = (textFieldData as any)[key].getValue()
             })
-            fetchAuth(newUser, config.url.register)
+            dispatch(fetchProfile(newUser, 'add'))
         }
     }
 
-    console.log(user)
+    useEffect(() => {
+        if (!profile.isFetching) {
+            if (profile.error){
+                if (profile.error.data?.code === '000.023'){
+                    console.log('error')
+                    textFieldData.login.changeError('Измените данные')
+                    textFieldData.email.changeError('Измените данные')
+                }
+                setMessage({
+                    show: true,
+                    status: 'error',
+                    text: profile.error.data?.message
+                })
+            }
+            if (profile.data){
+                setMessage({
+                    show: true,
+                    status: 'primary',
+                    text: profile.data.message
+                })
+            }
+            if (profile.data?.success){
+                setDefaultUseInputValue(textFieldData)
+                setUser(getDefaultUser())
+            }
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [profile.isFetching])
 
+    console.log(profile)
     return (
         <>
             <Module>
@@ -67,6 +109,13 @@ export const EditUser: React.FC<TEditUser> = ({changeMode}: TEditUser) =>{
                 </Text>
                 <hr />
                 
+                {message.show &&
+                    <Message
+                        text={message.text}
+                        status={message.status}
+                    />
+                }
+
                 <Grid modifier='module__border module__name'>
                     <Text modifier='user__block__title'>
                         Основное
@@ -143,6 +192,17 @@ export const EditUser: React.FC<TEditUser> = ({changeMode}: TEditUser) =>{
                                 onBlur={textFieldData.email.validate}
                             />
                         </div>
+                        <div className='user__block'>
+                            <Text modifier='user__block__text'>
+                                Телефон
+                            </Text>
+                            <Input
+                                name='phone'
+                                type='phone'
+                                {...textFieldData.phone.bind}
+                                onBlur={textFieldData.phone.validate}
+                            />
+                        </div>
                     </Grid>
 
                 </Grid>
@@ -211,9 +271,10 @@ export const EditUser: React.FC<TEditUser> = ({changeMode}: TEditUser) =>{
                             onClick={saveHandler}
                             variant='outlined'
                             size='small'
-                        >
-                            Сохранить
-                        </Button>
+                            isFetching={profile.isFetching}
+                            disabled={profile.isFetching}
+                            content="Сохранить"
+                        />
                     </div>
 
                     <div className='users__btn'>
@@ -221,9 +282,8 @@ export const EditUser: React.FC<TEditUser> = ({changeMode}: TEditUser) =>{
                             onClick={() => changeMode('users_list')}
                             variant='outlined'
                             size='small'
-                        >
-                            Отмена
-                        </Button>
+                            content="Назад"
+                        />
                     </div>
 
                 </Flex>

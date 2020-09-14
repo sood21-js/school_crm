@@ -1,27 +1,22 @@
-const mongoose = require("mongoose")
 const config = require("../api.config")
 const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator')
 
 const User = require('../models/User')
+const Profile = require('../models/Profile')
 
+//login = '123123@mail.ru', password = '1231321'
 module.exports.register = async function (req, res) {
     try {
+        console.log(req.body)
+        const newUser = req.body
+        const { email, login, password } = newUser
 
-        /* const errors = validationResult(req)
-
-        if (!errors.isEmpty()) {
-            return res.status(400).json({
-                code: "000.011",
-                errors: errors.array(),
-                message: 'Некорректный данные при регистрации'
-            })
-        } */
-
-        const { email = '123123@mail.ru', password = '1231321' } = req.body
-
-        const result = await User.save(email, password)
-        if (result) {
+        const result = await User.save({ email, login, password })
+        console.log(result)
+        const profile = await Profile.save(newUser)
+        console.log(profile)
+        if (result && profile) {
             res.status(201).json({
                 message: 'Пользователь успешно создан'
             })
@@ -42,24 +37,21 @@ module.exports.register = async function (req, res) {
 module.exports.login = async function (req, res) {
 
     try {
-        if (req.session.userId && !req.body.email && !req.body.password) {
-            console.log('userId = ', req.session.userId)
-            const id = req.session.userId
-            const user = await User.findById(id)
-            if (!user) {
-                return res.status(400).json({ message: 'Пользователь не найден', success: false })
+        const { email, password } = req.body
+
+        //autorization by cookie token
+        if (!email && !password) {
+            if (req.user && !email && !password) {
+                const id = req.user.userId
+                const user = await User.findById(id)
+                if (user) {
+                    return res.status(200).json({ userId: id, isAuth: true, success: true })
+                }
             }
-            const token = jwt.sign(
-                { userId: id },
-                config.jwtSecret,
-                { expiresIn: '1h' }
-            )
-            return res.json({ token: `Bearer ${token}`, userId: id, isAuth: true })
-        } else if (!req.body.email && !req.body.password) {
             return res.status(400).json({ success: false })
         }
 
-
+        //autorization by login (email) & password
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
             return res.status(400).json({
@@ -70,23 +62,35 @@ module.exports.login = async function (req, res) {
             })
         }
 
-        const { email = '', password = '' } = req.body
-        const user = await User.findOne({ email, password })
-        if (!user) {
-            return res.status(400).json({ message: 'Пользователь не найден', success: false })
-        }
+        if (email && password) {
+            let user = await User.findOne({ email, password })
+            console.log('67 = ', user)
+            if (!user) {
+                return res.status(400).json({
+                    code: '000.024',
+                    message: 'Пользователь не найден',
+                    success: false
+                })
+            }
 
-        const token = jwt.sign(
-            { userId: user._id },
-            config.jwtSecret,
-            { expiresIn: '1h' }
-        )
-        req.session.userId = user._id
-        req.session.auth = true
-        res.json({ token, userId: user._id, isAuth: true })
+            const token = jwt.sign(
+                { userId: user._id },
+                config.jwtSecret,
+                { expiresIn: '1h' }
+            )
+            res.json({
+                token: `${token}`,
+                userId: user._id,
+                isAuth: true,
+                success: false
+            })
+        }
 
     } catch (e) {
         console.log(e)
-        res.status(500).json({ message: 'Что-то пошло не так, попробуйте снова' })
+        res.status(500).json({
+            message: 'Что-то пошло не так, попробуйте снова',
+            success: false
+        })
     }
 }

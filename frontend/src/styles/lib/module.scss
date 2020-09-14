@@ -26,6 +26,23 @@
   font-size: 1rem;
 }
 
+.module__message {
+  height: 40px;
+  color: white;
+  display: grid;
+  align-items: center;
+  padding: 0 1rem;
+  font-size: 1rem;
+}
+
+.module__message__primary {
+  background-color: $primary-green;
+}
+
+.module__message__error {
+  background-color: $error-red;
+}
+
 .module__border {
   border-bottom: 1px solid $border-module;
 }
@@ -37,21 +54,20 @@
   margin: 1rem 0;
 }
 
-.module__mb2{
+.module__mb2 {
   margin-bottom: 2rem;
 }
 
 //checkbox color
-.MuiCheckbox-colorPrimary.Mui-checked{
+.MuiCheckbox-colorPrimary.Mui-checked {
   color: $darken !important;
 }
 
 //change input material-ui input color
-.MuiFormLabel-root.Mui-focused{
+.MuiFormLabel-root.Mui-focused {
   color: $darken !important;
 }
-.MuiOutlinedInput-root.Mui-focused
-.MuiOutlinedInput-notchedOutline{
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
   border-color: $darken !important;
 }
 //change input material-ui input color
