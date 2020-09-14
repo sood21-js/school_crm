@@ -1,5 +1,4 @@
 import { IUser } from '#src/redux/types/users'
-import { TUseInput } from '#src/hooks/useInput'
 
 export const getDefaultUser = (): IUser => {
     return {
