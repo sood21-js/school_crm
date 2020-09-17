@@ -9,6 +9,7 @@
 @import './lib/module';
 @import './lib/tabs';
 @import './lib/button.scss';
+@import './lib/table.scss';
 
 //pages
 @import './pages/auth';
@@ -28,4 +29,12 @@ body {
 
 .ml05{
   margin-left: .5rem;
+}
+
+.txt-a-l{
+  text-align: left;
+}
+
+.txt-a-c{
+  text-align: center;
 }

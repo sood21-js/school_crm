@@ -33,6 +33,7 @@
   align-items: center;
   padding: 0 1rem;
   font-size: 1rem;
+  transition: 1s;
 }
 
 .module__message__primary {
@@ -58,19 +59,9 @@
   margin-bottom: 2rem;
 }
 
-//checkbox color
-.MuiCheckbox-colorPrimary.Mui-checked {
-  color: $darken !important;
+.module__circle{
+  text-align: center;
 }
-
-//change input material-ui input color
-.MuiFormLabel-root.Mui-focused {
-  color: $darken !important;
-}
-.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
-  border-color: $darken !important;
-}
-//change input material-ui input color
 
 @media screen and (max-width: 800px) {
   .module__name {

@@ -67,7 +67,7 @@ module.exports.findById = async (id) => {
     return result
 }
 
-module.exports.find = async (data) => {
+module.exports.find = async (data = {}) => {
     mongoose.connect(config.mongoose.url, config.mongoose.options)
     const result = await Profile.find().or(data)
     await mongoose.disconnect()
@@ -75,6 +75,7 @@ module.exports.find = async (data) => {
 }
 
 module.exports.update = async (data) => {
+    console.log(data)
     const { _id } = data
     mongoose.connect(config.mongoose.url, config.mongoose.options)
     const result = await Profile.updateOne({ _id }, data)

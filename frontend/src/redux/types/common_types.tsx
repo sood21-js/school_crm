@@ -25,6 +25,6 @@ export type TResponse = {
     data: any
 }
 
-export type TFetchMethod = 'get' | 'add' | 'put' | 'delete'
+export type TFetchMethod = 'get_all' | 'get' | 'add' | 'put' | 'delete'
 
 

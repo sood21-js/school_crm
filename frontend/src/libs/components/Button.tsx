@@ -1,7 +1,7 @@
 import React from 'react';
 
 import * as material from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export interface IButton {
     color?: 'primary' | 'secondary'

@@ -5,11 +5,11 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 interface ICheckBox {
     checked: boolean
     label?: string
-
-    onChange: (v: boolean) => void
+    disabled?: boolean
+    onChange?: (v: boolean) => void
 }
 
-export const CheckBox: React.FC<ICheckBox> = ({checked, label, onChange}: ICheckBox) => {
+export const CheckBox: React.FC<ICheckBox> = ({checked, label, disabled, onChange = () => {}}: ICheckBox) => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         onChange(event.target.checked);
     };
@@ -17,6 +17,7 @@ export const CheckBox: React.FC<ICheckBox> = ({checked, label, onChange}: ICheck
         <FormControlLabel
             control={
                 <Checkbox
+                    disabled={disabled}
                     checked={checked}
                     onChange={handleChange}
                     color="primary"

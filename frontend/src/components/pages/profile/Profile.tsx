@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 import { Tabs, ITabs, IBtn } from '#src/libs/components/Tabs';
-import { Users } from './users/Users';
+import { Users } from './users/pages/Users';
 import { CommonSettings } from './common_settings/CommonSettings';
 import { LogsList } from './logs_list/LogsList';
 

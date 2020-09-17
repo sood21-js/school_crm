@@ -5,7 +5,6 @@ module.exports.getAll = async function (req, res) {
     try {
         const { data } = req.body
         const profileList = await Profile.find(data)
-        console.log(profile)
         if (profileList) {
             res.status(200).json(profileList)
         }
@@ -86,26 +85,30 @@ module.exports.add = async function (req, res) {
 module.exports.put = async function (req, res) {
     try {
         console.log(req.body)
-        const { data } = req.body
-        const profile = await Profile.update(data)
-        console.log(profile)
-        if (profile) {
-            res.status(200).json({
-                message: 'Профиль успешно изменен',
-                success: true
-            })
-        }
-        else {
-            res.status(400).json({
-                code: "000.100",
-                message: "Ошибка при запросе к базе",
+        const {email, login, userId} = req.body
+        const user = await User.update({ email, login, _id: userId })
+        if (user) {
+            const profile = await Profile.update(req.body)
+            if (profile) {
+                return res.status(201).json({
+                    message: 'Пользователь успешно отредактирован',
+                    success: true
+                })
+            } else {
+                console.log('Не удалост сохранить profile, удалаяем user')
+                await User.delete(user._id)
+            }
+        } else {
+            return res.status(400).json({
+                code: "000.023",
+                message: 'Такой пользователь уже существует в базе, измените email или логин',
                 success: false
             })
         }
 
     } catch (e) {
         console.log(e)
-        res.status(500).json({
+        return res.status(500).json({
             message: 'Что-то пошло не так, попробуйте снова',
             success: false
         })

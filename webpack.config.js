@@ -42,7 +42,7 @@ module.exports = {
     context: path.resolve(__dirname),
     mode: 'development',
     entry: {
-        main: ['@babel/polyfill', './frontend/src/index.jsx'],
+        main: ['@babel/polyfill', './frontend/src/index.tsx'],
     },
     output: {
         filename: filename('js'),

@@ -12,13 +12,14 @@ import config from '../../config.app'
 import { Dispatch } from 'redux';
 import { setCookie, getCookie } from '#src/helpers/cookie';
 
-export const receiveAuth = (data: unknown) => ({ type: RECEIVE_AUTH, data } as const);
+export const receiveAuth = (data: any) => ({ type: RECEIVE_AUTH, data } as const);
 export const requestAuth = () => ({ type: REQUEST_AUTH } as const);
 export const clearAuth = () => ({ type: CLEAR_AUTH } as const);
 export const errorAuth = (error: TResponseError) => ({ type: ERROR_AUTH, error } as const);
 
 export const fetchAuth = (data: ILogin, url = config.url.login) => (dispatch: Dispatch<ActionsTypes>) => {
     dispatch(requestAuth())
+    console.log('Запрос')
     return fetchApi(data, url)
         .then((resuilt: TResponse) => {
             console.log(resuilt)

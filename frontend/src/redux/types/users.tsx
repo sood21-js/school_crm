@@ -5,6 +5,7 @@ export interface IUser {
 
     login: string
     email: string
+    phone?: string
 
     group: string
     active: boolean

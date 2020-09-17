@@ -41,10 +41,13 @@ module.exports.login = async function (req, res) {
 
         //autorization by cookie token
         if (!email && !password) {
-            if (req.user && !email && !password) {
+            console.log('req.user', req.user)
+            if (req.user) {
                 const id = req.user.userId
                 const user = await User.findById(id)
+                console.log('48 user', user)
                 if (user) {
+                    console.log('50 user', user)
                     return res.status(200).json({ userId: id, isAuth: true, success: true })
                 }
             }

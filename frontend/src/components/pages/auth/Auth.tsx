@@ -112,7 +112,7 @@ export function AuthPage(){
                         disabled={auth.isFetching || disableSubmiit}
                         onClick={submitHandler}
                     >
-                        {auth.isFetching ? <CircularProgress size='24px'/> : 'Войти'}
+                        {auth.isFetching ? <CircularProgress size='24px' color='inherit'/> : 'Войти'}
                     </Button>
                 </div>
                 

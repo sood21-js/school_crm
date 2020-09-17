@@ -42,7 +42,7 @@ const Content: React.FC = () => {
                 <Route exact path="/">
                     <ProfilePage />
                 </Route>
-                <Redirect to="/" />
+                {/* <Redirect to="/" /> */}
             </Switch>
         </div>
     )

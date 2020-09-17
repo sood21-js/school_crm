@@ -7,7 +7,7 @@ export type TUseInput = {
         helperText: string | null,
         error: boolean
     },
-    validate: () => void,
+    validate: () => boolean,
     changeError: (text: string) => void,
     getValue: () => string,
     setDefaultValue: () => void,
@@ -20,8 +20,7 @@ type TOptions = {
     phone?: boolean
 }
 
-export function useInput(defaultValue: any, name: any, options: TOptions):TUseInput {
-
+export function useInput(defaultValue: string, name: string, options: TOptions):TUseInput {
     const [value, setValue] = useState(defaultValue)
     const [error, setError] = useState('')
     const [init, setInit] = useState(false)
@@ -33,25 +32,25 @@ export function useInput(defaultValue: any, name: any, options: TOptions):TUseIn
         Object.keys(options).forEach((key: any) => {
             switch (key) {
             case 'required':
-                if (key === 'required' && !value){
+                if (key === 'required' && options.required && !value){
                     setError('Обязательное поле')
                     valid = false
                 }
                 break;
             case 'minLength': 
-                if (options.minLength && options.minLength > value.length){
+                if (options.minLength && options.minLength > value?.length){
                     setError(`Минимальное число символов ${options.minLength}`)
                     valid = false
                 }
                 break
             case 'maxLength':
-                if (options.maxLength && options.maxLength < value.length){
+                if (options.maxLength && options.maxLength < value?.length){
                     setError(`Максимальное число символов ${options.maxLength}`)
                     valid = false
                 }
                 break
             case 'phone':
-                if (value.length > 0 && value.length !== 18){
+                if (value?.length > 0 && value?.length !== 18){
                     setError(`Некорректный номер`)
                     valid = false
                 }
