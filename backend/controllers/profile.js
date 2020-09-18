@@ -1,15 +1,17 @@
 const User = require('../models/User')
 const Profile = require('../models/Profile')
+const Log = require('../models/Log')
+const logs = require('../helpers/LogsData/profile')
 
 module.exports.getAll = async function (req, res) {
     try {
         const { data } = req.body
         const profileList = await Profile.find(data)
         if (profileList) {
-            res.status(200).json(profileList)
+            return res.status(200).json(profileList)
         }
         else {
-            res.status(400).json({
+            return res.status(400).json({
                 code: "000.100",
                 message: 'Ошибка при запросе к базе',
                 success: false
@@ -56,7 +58,8 @@ module.exports.add = async function (req, res) {
             newUser.userId = user._id
             const profile = await Profile.save(newUser)
             if (user && profile) {
-                res.status(201).json({
+                await Log.save(logs.successfulAddProfile(req.user.userId))
+                return res.status(201).json({
                     message: 'Пользователь успешно создан',
                     success: true
                 })
@@ -64,6 +67,7 @@ module.exports.add = async function (req, res) {
                 await User.delete(user._id)
             }
         } else {
+            await Log.save(logs.failedAddProfile(req.user.userId))
             res.status(400).json({
                 code: "000.023",
                 message: 'Такой пользователь уже существует в базе',
@@ -82,11 +86,12 @@ module.exports.add = async function (req, res) {
 
 module.exports.put = async function (req, res) {
     try {
-        const {email, login, userId} = req.body
+        const { email, login, userId } = req.body
         const user = await User.update({ email, login, _id: userId })
         if (user) {
             const profile = await Profile.update(req.body)
             if (profile) {
+                await Log.save(logs.successfulEditProfile(req.user.userId))
                 return res.status(201).json({
                     message: 'Пользователь успешно отредактирован',
                     success: true
@@ -95,6 +100,7 @@ module.exports.put = async function (req, res) {
                 await User.delete(user._id)
             }
         } else {
+            await Log.save(logs.failedEditProfile(req.user.userId))
             return res.status(400).json({
                 code: "000.023",
                 message: 'Такой пользователь уже существует в базе, измените email или логин',
@@ -116,13 +122,15 @@ module.exports.delete = async function (req, res) {
         const { id } = req.body
         const profile = await Profile.delete(id)
         if (profile) {
-            res.status(200).json({
+            await Log.save(logs.successfulDeleteProfile(req.user.userId))
+            return res.status(200).json({
                 message: 'Профиль успешно удален',
                 success: true
             })
         }
         else {
-            res.status(400).json({
+            await Log.save(logs.failedDeleteProfile(req.user.userId))
+            return res.status(400).json({
                 code: "001.003",
                 message: 'Произошла ошибка при удалении профиля',
                 success: false
@@ -131,7 +139,7 @@ module.exports.delete = async function (req, res) {
 
     } catch (e) {
         console.log(e)
-        res.status(500).json({
+        return res.status(500).json({
             message: 'Что-то пошло не так, попробуйте снова',
             success: false
         })

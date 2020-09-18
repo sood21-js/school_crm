@@ -4,6 +4,9 @@ const { validationResult } = require('express-validator')
 
 const User = require('../models/User')
 const Profile = require('../models/Profile')
+const Log = require('../models/Log')
+
+const logs = require('../helpers/LogsData/auth')
 
 module.exports.register = async function (req, res) {
     try {
@@ -38,18 +41,26 @@ module.exports.login = async function (req, res) {
         //autorization by cookie token
         if (!email && !password) {
             if (req.user) {
+                console.log(req.user)
                 const id = req.user.userId
                 const user = await User.findById(id)
                 if (user) {
-                    return res.status(200).json({ userId: id, isAuth: true, success: true })
+                    const token = jwt.sign(
+                        { userId: user._id },
+                        config.jwtSecret,
+                        { expiresIn: '1h' }
+                    )
+                    return res.status(200).json({ userId: id, isAuth: true, success: true, token })
                 }
             }
-            return res.status(400).json({ success: false })
+            await Log.save(logs.failedEntry())
+            return res.status(401).json({ success: false })
         }
 
         //autorization by login (email) & password
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
+            await Log.save(logs.failedEntry())
             return res.status(400).json({
                 code: "000.011",
                 errors: errors.array(),
@@ -61,6 +72,7 @@ module.exports.login = async function (req, res) {
         if (email && password) {
             let user = await User.findOne({ email, password })
             if (!user) {
+                await Log.save(logs.failedEntry())
                 return res.status(400).json({
                     code: '000.024',
                     message: 'Пользователь не найден',
@@ -73,7 +85,9 @@ module.exports.login = async function (req, res) {
                 config.jwtSecret,
                 { expiresIn: '1h' }
             )
-            res.json({
+
+            await Log.save(logs.successfulEntry(user._id))
+            return res.json({
                 token: `${token}`,
                 userId: user._id,
                 isAuth: true,
