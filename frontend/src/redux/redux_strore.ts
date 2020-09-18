@@ -6,10 +6,12 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import auth from './reducers/auth';
 import profile from './reducers/profile';
+import logs from './reducers/logs';
 
 const rootReducers = combineReducers({ 
     auth,
-    profile
+    profile,
+    logs
 })
 export type RootReducerType = typeof rootReducers
 

@@ -9,6 +9,7 @@ const login = require('./middleware/login')
 
 const authRoutes = require('./routes/auth')
 const profileRoutes = require('./routes/profile')
+const logsRoutes = require('./routes/logs')
 
 const PORT = process.env.PORT || config.port
 
@@ -21,6 +22,7 @@ app
 
 app.use('/auth', login, authRoutes)
 app.use('/profile', auth, profileRoutes)
+app.use('/logs', auth, logsRoutes)
 app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname, '../dist', 'index.html'))
 });

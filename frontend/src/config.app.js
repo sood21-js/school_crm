@@ -11,7 +11,8 @@ const config = {
     url: {
         login: `/auth/login`,
         register: `/auth/register`,
-        profile: '/profile/'
+        profile: '/profile/',
+        logs: '/logs/'
     },
     regexps: {
         companyName: /[^A-Za-z- ']/gm,
