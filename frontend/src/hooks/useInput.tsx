@@ -1,15 +1,25 @@
 import {useState, useEffect, useCallback} from 'react'
 
+/*
+validation 
+ - required
+ - maxLength(Max)
+ - minLength(Min)
+ - check phone value
+*/
+
+
 export type TUseInput = {
     bind: {
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
-        value: any,
-        helperText: string | null,
+        onChange: (v: string | boolean) => void,
+        value?: any,
+        checked?: boolean,
+        helperText: string | undefined,
         error: boolean
     },
     validate: () => boolean,
     changeError: (text: string) => void,
-    getValue: () => string,
+    getValue: () => string | boolean,
     setDefaultValue: () => void,
 }
 
@@ -20,7 +30,12 @@ type TOptions = {
     phone?: boolean
 }
 
-export function useInput(defaultValue: string, name: string, options: TOptions):TUseInput {
+export function useInput(
+    defaultValue: string | boolean, 
+    name: string, 
+    options: TOptions, 
+    type?: 'checkBox' | 'select'
+):TUseInput {
     const [value, setValue] = useState(defaultValue)
     const [error, setError] = useState('')
     const [init, setInit] = useState(false)
@@ -38,19 +53,19 @@ export function useInput(defaultValue: string, name: string, options: TOptions):
                 }
                 break;
             case 'minLength': 
-                if (options.minLength && options.minLength > value?.length){
+                if (options.minLength && value === typeof 'string' && options.minLength > value?.length){
                     setError(`Минимальное число символов ${options.minLength}`)
                     valid = false
                 }
                 break
             case 'maxLength':
-                if (options.maxLength && options.maxLength < value?.length){
+                if (options.maxLength && value === typeof 'string' && options.maxLength < value?.length){
                     setError(`Максимальное число символов ${options.maxLength}`)
                     valid = false
                 }
                 break
             case 'phone':
-                if (value?.length > 0 && value?.length !== 18){
+                if (value === typeof 'string' && value?.length > 0 && value?.length !== 18){
                     setError(`Некорректный номер`)
                     valid = false
                 }
@@ -67,9 +82,9 @@ export function useInput(defaultValue: string, name: string, options: TOptions):
     }, [init, validate, value])
     
     //const regExp: RegExp = config.regexps[name]
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onChange = (v: string | boolean) => {
         setInit(true)
-        setValue(e.target.value)
+        setValue(v)
     }
 
     const changeError = (text: string) => setError(text)
@@ -78,13 +93,14 @@ export function useInput(defaultValue: string, name: string, options: TOptions):
 
     const setDefaultValue = () => {
         setInit(false)
-        setValue('')
+        if (type === 'checkBox') setValue(false)
+        else setValue('')
+        
     }
 
-    const result = { 
+    const result: TUseInput = { 
         bind: {
-            onChange, 
-            value,
+            onChange,
             helperText: error,
             error: init && !!error 
         },
@@ -93,5 +109,10 @@ export function useInput(defaultValue: string, name: string, options: TOptions):
         getValue,
         setDefaultValue
     }
+
+    if (type === 'checkBox' && typeof value === 'boolean'){
+        result.bind.checked = value
+    } else result.bind.value = value
+
     return result
 }

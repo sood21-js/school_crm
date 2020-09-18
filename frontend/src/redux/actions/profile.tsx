@@ -20,11 +20,9 @@ export const fetchProfile = (data: any, method: TFetchMethod = 'get') => (dispat
     dispatch(requestProfile())
     return fetchApi(data, `${config.url.profile}${method}`)
         .then((resuilt: TResponse) => {
-            console.log(resuilt)
             dispatch(receiveProfile(resuilt.data))
         })
         .catch((error: any) => {
-            console.log(error.response)
             dispatch(errorProfile({
                 data: error.response?.status !== 404
                     ? error.response?.data

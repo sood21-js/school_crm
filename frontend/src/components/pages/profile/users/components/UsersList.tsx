@@ -6,7 +6,7 @@ import { Module } from '#src/libs/components/Module';
 import { Button } from '#src/libs/components/Button';
 import CircularProgress from '@material-ui/core/CircularProgress'
 
-import { TMode } from '../pages/Users';
+import { TMode } from './Users';
 import { TState, AppStateType } from '#src/redux/types/common_types';
 import { IUser } from '#src/redux/types/users';
 import { CheckBox } from '#src/libs/components/CheckBox';
@@ -19,11 +19,7 @@ type TUsersList = {
 export const UsersList: React.FC<TUsersList> = ({changeMode}: TUsersList) => {
     const dispatch = useDispatch();
     const profile = useSelector((state: AppStateType): TState => state.profile);
-    const [message, setMessage] = useState({
-        show: false, 
-        status: 'primary', 
-        text: ''
-    })
+    const [message, setMessage] = useState('')
 
     useEffect(() => {
         dispatch(fetchProfile('', 'get_all'))
@@ -35,13 +31,8 @@ export const UsersList: React.FC<TUsersList> = ({changeMode}: TUsersList) => {
 
     useEffect(() => {
         if (!profile.isFetching) {
-            console.log(true)
             if (profile.data?.message){
-                setMessage({
-                    show: true,
-                    status: 'primary',
-                    text: profile.data.message
-                })
+                setMessage(profile.data.message)
 
             }
         }
@@ -65,13 +56,11 @@ export const UsersList: React.FC<TUsersList> = ({changeMode}: TUsersList) => {
             </Module>
             <Module>
 
-                {message.show &&
-                    <Message
-                        show={message.show}
-                        text={message.text}
-                        status={message.status}
-                    />
-                }
+                <Message 
+                    variant='success' 
+                    text={message}
+                    onClose={() => setMessage('')}
+                />
                 
                 {profile.isFetching 
                     ? <div className="module__circle"><CircularProgress size='24px'/></div>

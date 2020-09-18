@@ -16,11 +16,13 @@ export interface IInput {
     required?: true
     helperText?: string | null,
     error?: boolean 
-    disabled?: boolean
+    disabled?: boolean,
+    autoComplete?: string,
+    margin?: 'normal'
     
     onBlur?: () => void
     onKeyUp?: (e: React.KeyboardEvent) => void
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void 
+    onChange: (v: string) => void 
 }
 
 export const Input: React.FC<IInput> = ({
@@ -29,6 +31,7 @@ export const Input: React.FC<IInput> = ({
     type='text',
     mode='textfield',
     variant='outlined',
+    label,
     onChange,
     ...options
 }: IInput) => {
@@ -67,22 +70,26 @@ export const Input: React.FC<IInput> = ({
         const middleValue = converPhonetoValue(e.target.value)
         const newValue = convertValueToPhone(middleValue)
 
-        e.target.value = newValue
-        onChange(e)
+        onChange(newValue)
     }
+
+    const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value)
 
     return (
         <>
             {mode === 'textfield' &&
          <TextField
              {...options}
+             fullWidth
              size={size}
              type={type}
              variant={variant}
              onChange={type === 'phone'
                  ? changePhoneValue
-                 : onChange}
-             label={options.required ? 'Обязательное поле' : ''}
+                 : changeHandler}
+             label={label
+                 ? label
+                 : options.required ? 'Обязательное поле' : ''}
          />
             }
         </>

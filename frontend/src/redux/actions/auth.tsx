@@ -10,7 +10,7 @@ import { TResponseError, TResponse } from '../types/common_types'
 import { fetchApi } from '../../libs/net/fetch'
 import config from '../../config.app'
 import { Dispatch } from 'redux';
-import { setCookie, getCookie } from '#src/helpers/cookie';
+import { setCookie } from '#src/helpers/cookie';
 
 export const receiveAuth = (data: any) => ({ type: RECEIVE_AUTH, data } as const);
 export const requestAuth = () => ({ type: REQUEST_AUTH } as const);
@@ -19,15 +19,12 @@ export const errorAuth = (error: TResponseError) => ({ type: ERROR_AUTH, error }
 
 export const fetchAuth = (data: ILogin, url = config.url.login) => (dispatch: Dispatch<ActionsTypes>) => {
     dispatch(requestAuth())
-    console.log('Запрос')
     return fetchApi(data, url)
         .then((resuilt: TResponse) => {
-            console.log(resuilt)
             dispatch(receiveAuth(resuilt.data))
             setCookie(config.cookie.name, resuilt.data.token)
         })
         .catch((error: any) => {
-            console.log(error.response)
             dispatch(errorAuth({
                 data: error.response?.status !== 404
                     ? error.response?.data

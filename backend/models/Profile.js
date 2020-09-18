@@ -53,7 +53,6 @@ const Profile = model("Profile", scheme);
 Profile.init()
 module.exports.save = async (data) => {
     mongoose.connect(config.mongoose.url, config.mongoose.options)
-    console.log(data)
     const profile = new Profile(data)
     await profile.save()
     await mongoose.disconnect()
@@ -75,7 +74,6 @@ module.exports.find = async (data = {}) => {
 }
 
 module.exports.update = async (data) => {
-    console.log(data)
     const { _id } = data
     mongoose.connect(config.mongoose.url, config.mongoose.options)
     const result = await Profile.updateOne({ _id }, data)

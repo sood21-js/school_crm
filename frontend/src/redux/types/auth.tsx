@@ -6,8 +6,8 @@ export const CLEAR_AUTH = "CLEAR_AUTH"
 export const ERROR_AUTH = "ERROR_AUTH"
 
 export interface ILogin {
-    email?: string,
-    password?: string
+    email?: string | any,
+    password?: string | any
 }
 
 export type TRequest = ReturnType<typeof requestAuth>

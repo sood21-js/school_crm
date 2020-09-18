@@ -58,16 +58,13 @@ module.exports.findOne = async ({ email, password }) => {
 
 module.exports.update = async (data) => {
     const { _id, email, login } = data
-    console.log(data)
     mongoose.connect(config.mongoose.url, config.mongoose.options)
     const userEmail = await User.findOne({ email })
-    console.log(userEmail)
     if (userEmail && userEmail._id.toString() !== data._id) {
         await mongoose.disconnect()
         return false
     }
     const userLogin = await User.findOne({ login })
-    console.log(userLogin)
     if (userLogin && userLogin._id.toString() !== data._id) {
         await mongoose.disconnect()
         return false

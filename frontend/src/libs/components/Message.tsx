@@ -1,35 +1,49 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
+import Snackbar from '@material-ui/core/Snackbar';
 
-export interface IMsg {
-    text: string,
-    status: string,
-    show: boolean
+function Alert(props: AlertProps) {
+    return <MuiAlert elevation={6} variant='filled' {...props} />;
 }
 
-export const Message: React.FC<IMsg> = ({text, status, show}: IMsg) => {
-    const [showMsg, setShowMsg] = useState<boolean>(show)
-    useEffect(() => {
-        console.log(show)
-        setShowMsg(show)
-        if (show){
-            const timer = setTimeout(() => {
-                console.log('запускаю таймер')
-                setShowMsg(false)
-            }, 5000)
-            return () => clearTimeout(timer)
-        }
-    }, [show])
+type TMEssage = {
+    variant: 'success' | 'info' | 'warning' | 'error',
+    text: string,
+    autoHideDuration?: number,
+    anchorOrigin?: {
+        vertical: 'top' | 'bottom', 
+        horizontal: 'left' | 'center' | 'right'
+    }
+    //clear message
+    onClose: (txt: string) => void
+} 
 
-    console.log(text, status, show, showMsg)
+export const Message: React.FC<TMEssage> = ({variant, text, autoHideDuration = 6000, onClose}: TMEssage) => {
+    const [open, setOpen] = React.useState(false)
+
+    const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+        if (reason === 'clickaway') {
+            return
+        }
+        onClose('')
+        setOpen(false)
+    }
+
+    useEffect(() => {
+        if (text) setOpen(true)
+    }, [text])
+
     return (
-        <>
-            {showMsg && 
-            <div className={`module__message ${status === 'primary'
-                ? 'module__message__primary'
-                : 'module__message__error'}`
-            }>
+        <Snackbar 
+            open={open} 
+            autoHideDuration={autoHideDuration} 
+            onClose={handleClose}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        >
+            <Alert severity={variant}>
                 {text}
-            </div>}
-        </>
+            </Alert>
+        </Snackbar>
     )
 }
+

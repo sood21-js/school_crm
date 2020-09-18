@@ -53,7 +53,6 @@ module.exports.add = async function (req, res) {
 
         const user = await User.save({ email, login, password })
         if (user) {
-            console.log(user, newUser)
             newUser.userId = user._id
             const profile = await Profile.save(newUser)
             if (user && profile) {
@@ -62,7 +61,6 @@ module.exports.add = async function (req, res) {
                     success: true
                 })
             } else {
-                console.log('Не удалост сохранить profile, удалаяем user')
                 await User.delete(user._id)
             }
         } else {
@@ -84,7 +82,6 @@ module.exports.add = async function (req, res) {
 
 module.exports.put = async function (req, res) {
     try {
-        console.log(req.body)
         const {email, login, userId} = req.body
         const user = await User.update({ email, login, _id: userId })
         if (user) {
@@ -95,7 +92,6 @@ module.exports.put = async function (req, res) {
                     success: true
                 })
             } else {
-                console.log('Не удалост сохранить profile, удалаяем user')
                 await User.delete(user._id)
             }
         } else {
@@ -117,10 +113,8 @@ module.exports.put = async function (req, res) {
 
 module.exports.delete = async function (req, res) {
     try {
-        console.log(req.body)
         const { id } = req.body
         const profile = await Profile.delete(id)
-        console.log(profile)
         if (profile) {
             res.status(200).json({
                 message: 'Профиль успешно удален',

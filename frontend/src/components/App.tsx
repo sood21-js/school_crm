@@ -16,11 +16,11 @@ type TApp = unknown
 
 export const App: React.FC<TApp> = () => {
     const dispatch = useDispatch();
-    const {data} = useSelector((state: AppStateType): TState => state.auth)
-    const isAuth = data?.isAuth || false
+    const auth = useSelector((state: AppStateType): TState => state.auth)
+    const isAuth = auth.data?.isAuth || false
     useEffect(() => {
-        if (!isAuth) dispatch(fetchAuth({}))
-    }, [isAuth, dispatch])
+        dispatch(fetchAuth({}))
+    }, [])
     return (
         <>
             <BrowserRouter>

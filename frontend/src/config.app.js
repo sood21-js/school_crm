@@ -4,7 +4,7 @@ const config = {
     },
     cookie:{
         maxAge: 3600,
-        name: 'school_auth',
+        name: 'schl',
         secure: false,
         httpOnly: false
     },

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
-import { UsersList } from '../components/UsersList';
-import { EditUser } from '../components/EditUser';
+import { UsersList } from './UsersList';
+import { EditUser } from './EditUser';
 import { IUser } from '#src/redux/types/users';
 
 export type TMode = 'users_list' | 'edit_user'

@@ -12,7 +12,7 @@ export interface ISelection {
     id?: string
     label?: string
     labelId?: string
-    value: string
+    value?: string
     variant?: 'outlined' | 'filled'
     selected: Array<TItem>
     defaultValue?: string
@@ -21,7 +21,7 @@ export interface ISelection {
     helperText?: string
     error?: boolean
 
-    onChange: (v: string) => void
+    onChange: (v: string | any) => void
 }
 
 export const Selection: React.FC<ISelection> = ({
@@ -34,13 +34,14 @@ export const Selection: React.FC<ISelection> = ({
     disabled = false,
     helperText,
     onChange,
-    value,
-    error = false
+    value = '',
+    error = false,
+    ...args
 }: ISelection) => {
  
-    const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        onChange(event.target.value as string);
-    };
+    const handleChange = (event: React.ChangeEvent<{name?: string | undefined, value: unknown}>) => {
+        onChange(event.target.value);
+    }
 
     return(
         <>

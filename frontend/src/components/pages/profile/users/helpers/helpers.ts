@@ -11,7 +11,6 @@ export const getDefaultUser = (): IUser => {
 
 export const setDefaultUseInputValue = (fieldObj: any) => {
     Object.keys(fieldObj).forEach((field: any) =>{
-        console.log(fieldObj[field])
         fieldObj[field].setDefaultValue()
     })
 } 

@@ -4,16 +4,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Module } from '#src/libs/components/Module';
 import { Button } from '#src/libs/components/Button';
 import { Flex } from '#src/libs/components/Flex';
-import { TMode } from '../pages/Users';
+import { TMode } from './Users';
 import { Text } from '#src/libs/components/Text';
 import { Grid } from '#src/libs/components/Grid';
 import { Input } from '#src/libs/components/Input';
 import { Selection } from '#src/libs/components/Select';
 
 import config from '#src/config.app';
-import {getDefaultUser, setDefaultUseInputValue} from '../helpers/helpers';
+import {getDefaultUser} from '../helpers/helpers';
 import { useInput } from '#src/hooks/useInput';
-import { fetchProfile } from '#src/redux/actions/profile';
+import { clearProfile, fetchProfile } from '#src/redux/actions/profile';
 
 import { IUser } from '#src/redux/types/users';
 import { CheckBox } from '#src/libs/components/CheckBox';
@@ -33,11 +33,7 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
     
     const method = data ? 'put' : 'add'
     const [user, setUser] = useState<IUser>(data ? data : getDefaultUser())
-    const [message, setMessage] = useState({
-        show: false, 
-        status: 'primary', 
-        text: ''
-    })
+    const [message, setMessage] = useState<string>('')
 
     const changeHandler = (v: any, field: string) => {
         setUser({...user, [field]: v})
@@ -53,6 +49,8 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
         email: useInput(data ? data.email : '', 'email',  {required: true}),
         position: useInput(data ? data.position : '', 'position', {}),
         education: useInput(data ? data.education : '', 'education', {}),
+        active: useInput(data ? data.active : false, 'active', {}, 'checkBox'),
+        group: useInput(data ? data.group : '', 'active', {}),
     }
     type TTFDate = typeof textFieldData
 
@@ -78,24 +76,23 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
     useEffect(() => {
         if (!profile.isFetching) {
             if (profile.error){
-                if (profile.error.data?.code === '000.023'){
+                /* if (profile.error.data?.code === '000.023'){
                     textFieldData.login.changeError('Измените данные')
                     textFieldData.email.changeError('Измените данные')
-                }
-                setMessage({
-                    show: true,
-                    status: 'error',
-                    text: profile.error.data?.message
-                })
+                } */
+                setMessage(profile.error.data?.message)
+                dispatch(clearProfile())
             }
             if (profile.data?.success){
                 changeMode('users_list')
             }
         }
-    }, [profile.isFetching])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [
+        profile.isFetching, 
+        profile.error
+    ])
 
-    console.log(profile)
-    console.log(message)
     return (
         <>
             <Module>
@@ -106,14 +103,12 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
                     }
                 </Text>
                 <hr />
-                
-                {message.show &&
-                    <Message
-                        show={message.show}
-                        text={message.text}
-                        status={message.status}
-                    />
-                }
+                     
+                <Message 
+                    variant='error' 
+                    text={message}
+                    onClose={() => setMessage('')}
+                />
 
                 <Grid modifier='module__border module__name'>
                     <Text modifier='user__block__title'>
@@ -216,8 +211,7 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
                             </Text>
                             <Selection
                                 selected={config.usersRole}
-                                onChange={(v) => changeHandler(v, 'group')}
-                                value={user.group}
+                                {...textFieldData.group.bind}
                             />
                         </div>
                         <div className='user__block'>
@@ -225,9 +219,8 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
                                 Статус учетной записи
                             </Text>
                             <CheckBox
-                                checked={user.active}
                                 label='активна'
-                                onChange={(v) => changeHandler(v, 'active')}
+                                {...textFieldData.active.bind}
                             />
                         </div>
         

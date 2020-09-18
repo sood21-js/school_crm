@@ -5,17 +5,13 @@ const { validationResult } = require('express-validator')
 const User = require('../models/User')
 const Profile = require('../models/Profile')
 
-//login = '123123@mail.ru', password = '1231321'
 module.exports.register = async function (req, res) {
     try {
-        console.log(req.body)
         const newUser = req.body
         const { email, login, password } = newUser
 
         const result = await User.save({ email, login, password })
-        console.log(result)
         const profile = await Profile.save(newUser)
-        console.log(profile)
         if (result && profile) {
             res.status(201).json({
                 message: 'Пользователь успешно создан'
@@ -41,13 +37,10 @@ module.exports.login = async function (req, res) {
 
         //autorization by cookie token
         if (!email && !password) {
-            console.log('req.user', req.user)
             if (req.user) {
                 const id = req.user.userId
                 const user = await User.findById(id)
-                console.log('48 user', user)
                 if (user) {
-                    console.log('50 user', user)
                     return res.status(200).json({ userId: id, isAuth: true, success: true })
                 }
             }
@@ -67,7 +60,6 @@ module.exports.login = async function (req, res) {
 
         if (email && password) {
             let user = await User.findOne({ email, password })
-            console.log('67 = ', user)
             if (!user) {
                 return res.status(400).json({
                     code: '000.024',

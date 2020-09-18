@@ -9,6 +9,7 @@ import {useInput} from '#src/hooks/useInput'
 import { fetchAuth, clearAuth } from '#src/redux/actions/auth'
 import { TState } from '#src/redux/types/common_types'
 import { AppStateType } from '#src/redux/types/common_types'
+import { Input } from '#src/libs/components/Input'
 
 export function AuthPage(){
     const dispatch = useDispatch();
@@ -72,35 +73,36 @@ export function AuthPage(){
                     </div>
                 </div>
                 <div className="auth__input">
-                    <TextField
-                        variant="outlined"
+                    <Input
+                        required = {true}
+                        fullWidth = {true}
                         margin="normal"
-                        required
-                        fullWidth
                         id="email"
                         label="Email или Логин"
                         name="email"
+                        size="medium"
                         autoComplete="email"
                         disabled={auth.isFetching}
-                        {...email.bind}
                         onKeyUp={keyUpHandler}
                         onBlur={email.validate}
+                        {...email.bind}
                     />
                 </div>
                 <div className="auth__input">
-                    <TextField
-                        variant="outlined"
+                    <Input
+                        required = {true}
+                        fullWidth = {true}
                         margin="normal"
-                        required
-                        fullWidth
                         id="password"
                         label="Пароль"
-                        name="password"
+                        type='password'
+                        name="email"
+                        size="medium"
                         autoComplete="password"
                         disabled={auth.isFetching}
-                        {...password.bind}
                         onKeyUp={keyUpHandler}
-                        onBlur={email.validate}
+                        onBlur={password.validate}
+                        {...password.bind}
                     />
                 </div>
                 <div className="auth__input">
