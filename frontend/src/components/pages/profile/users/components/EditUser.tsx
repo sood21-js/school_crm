@@ -32,14 +32,10 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
     const profile = useSelector((state: AppStateType): TState => state.profile)
     
     const method = data ? 'put' : 'add'
-    const [user, setUser] = useState<IUser>(data ? data : getDefaultUser())
+    const user: IUser = data ? data : getDefaultUser()
     const [message, setMessage] = useState<string>('')
 
-    const changeHandler = (v: any, field: string) => {
-        setUser({...user, [field]: v})
-    }
-
-    const textFieldData = {
+    const fieldData = {
         name: useInput(data ? data.name : '', 'name', {required: true, maxLength: 20}),
         middleName: useInput(data ? data.middleName : '', 'middleName', {required: true, maxLength: 20}),
         lastName: useInput(data ? data.lastName : '', 'lastName',  {required: true, maxLength: 20}),
@@ -52,7 +48,7 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
         active: useInput(data ? data.active : false, 'active', {}, 'checkBox'),
         group: useInput(data ? data.group : '', 'active', {}),
     }
-    type TTFDate = typeof textFieldData
+    type TTFDate = typeof fieldData
 
     function checkValidate<T extends TTFDate> (data: T): boolean {
         let formValid = true
@@ -65,9 +61,9 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
     
     const saveHandler = () => {
         const newUser = { ...user }
-        if (checkValidate(textFieldData)){
-            Object.keys(textFieldData).forEach((key) => {
-                (newUser as any)[key] = (textFieldData as any)[key].getValue()
+        if (checkValidate(fieldData)){
+            Object.keys(fieldData).forEach((key) => {
+                (newUser as any)[key] = (fieldData as any)[key].getValue()
             })
             dispatch(fetchProfile(newUser, method))
         }
@@ -77,8 +73,8 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
         if (!profile.isFetching) {
             if (profile.error){
                 /* if (profile.error.data?.code === '000.023'){
-                    textFieldData.login.changeError('Измените данные')
-                    textFieldData.email.changeError('Измените данные')
+                    fieldData.login.changeError('Измените данные')
+                    fieldData.email.changeError('Измените данные')
                 } */
                 setMessage(profile.error.data?.message)
                 dispatch(clearProfile())
@@ -123,8 +119,8 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
                             </Text>
                             <Input
                                 name='lastName'
-                                {...textFieldData.lastName.bind}
-                                onBlur={textFieldData.lastName.validate}
+                                {...fieldData.lastName.bind}
+                                onBlur={fieldData.lastName.validate}
                             />
                         </div>
                         <div className='user__block'>
@@ -133,8 +129,8 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
                             </Text>
                             <Input
                                 name='name'
-                                {...textFieldData.name.bind}
-                                onBlur={textFieldData.name.validate}
+                                {...fieldData.name.bind}
+                                onBlur={fieldData.name.validate}
                             />
                         </div>
                         <div className='user__block'>
@@ -143,8 +139,8 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
                             </Text>
                             <Input
                                 name='middleName'
-                                {...textFieldData.middleName.bind}
-                                onBlur={textFieldData.middleName.validate}
+                                {...fieldData.middleName.bind}
+                                onBlur={fieldData.middleName.validate}
                             />
                         </div>
                     </Grid>
@@ -162,8 +158,8 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
                             </Text>
                             <Input
                                 name='login'
-                                {...textFieldData.login.bind}
-                                onBlur={textFieldData.login.validate}
+                                {...fieldData.login.bind}
+                                onBlur={fieldData.login.validate}
                             />
                         </div>
                         <div className='user__block'>
@@ -172,8 +168,8 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
                             </Text>
                             <Input
                                 name='password'
-                                {...textFieldData.password.bind}
-                                onBlur={textFieldData.password.validate}
+                                {...fieldData.password.bind}
+                                onBlur={fieldData.password.validate}
                             />
                         </div>
                         <div className='user__block'>
@@ -182,8 +178,8 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
                             </Text>
                             <Input
                                 name='email'
-                                {...textFieldData.email.bind}
-                                onBlur={textFieldData.email.validate}
+                                {...fieldData.email.bind}
+                                onBlur={fieldData.email.validate}
                             />
                         </div>
                         <div className='user__block'>
@@ -193,8 +189,8 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
                             <Input
                                 name='phone'
                                 type='phone'
-                                {...textFieldData.phone.bind}
-                                onBlur={textFieldData.phone.validate}
+                                {...fieldData.phone.bind}
+                                onBlur={fieldData.phone.validate}
                             />
                         </div>
                     </Grid>
@@ -211,7 +207,7 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
                             </Text>
                             <Selection
                                 selected={config.usersRole}
-                                {...textFieldData.group.bind}
+                                {...fieldData.group.bind}
                             />
                         </div>
                         <div className='user__block'>
@@ -220,7 +216,7 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
                             </Text>
                             <CheckBox
                                 label='активна'
-                                {...textFieldData.active.bind}
+                                {...fieldData.active.bind}
                             />
                         </div>
         
@@ -238,7 +234,7 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
                             </Text>
                             <Input
                                 name='position'
-                                {...textFieldData.position.bind}
+                                {...fieldData.position.bind}
                             />
                         </div>
                         <div className='user__block'>
@@ -247,7 +243,7 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
                             </Text>
                             <Input
                                 name='education'
-                                {...textFieldData.education.bind}
+                                {...fieldData.education.bind}
                             />
                         </div>
                     </Grid>
