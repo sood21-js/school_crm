@@ -29,6 +29,6 @@ export const fetchProfile = (data: any, method: TFetchMethod = 'get') => (dispat
                     : { message: 'Сервер не отвечает, попробуйте повторить запрос позже'},
                 status: error.response?.status
             }))
-            //reload(error)
+            reload(error)
         })
 }

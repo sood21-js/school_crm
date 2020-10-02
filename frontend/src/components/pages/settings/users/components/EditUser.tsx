@@ -79,7 +79,7 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
                 setMessage(profile.error.data?.message)
                 dispatch(clearProfile())
             }
-            if (profile.data?.success){
+            if (profile.data?.success && profile.data?.message){
                 changeMode('users_list')
             }
         }

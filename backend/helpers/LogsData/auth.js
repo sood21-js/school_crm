@@ -1,7 +1,4 @@
-//auth action
-const defaultUser = 'none'
-
-module.exports.successfulEntry = function (userId = defaultUser) {
+module.exports.successfulEntry = function (userId) {
     return {
         action: 'auth',
         userId,
@@ -9,7 +6,7 @@ module.exports.successfulEntry = function (userId = defaultUser) {
     }
 }
 
-module.exports.failedEntry = function (userId = defaultUser)  {
+module.exports.failedEntry = function (userId)  {
     return {
         action: 'auth',
         userId,

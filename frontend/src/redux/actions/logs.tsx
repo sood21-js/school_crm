@@ -29,6 +29,6 @@ export const fetchLogs = (data: any, method: TFetchMethod = 'get') => (dispatch:
                     : { message: 'Сервер не отвечает, попробуйте повторить запрос позже'},
                 status: error.response?.status
             }))
-            //reload(error)
+            reload(error)
         })
 }

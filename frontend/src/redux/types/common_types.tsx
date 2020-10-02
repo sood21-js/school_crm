@@ -27,4 +27,6 @@ export type TResponse = {
 
 export type TFetchMethod = 'get_all' | 'get' | 'add' | 'put' | 'delete'
 
+export type TObject<T = any> = { [key: string]: T };
+export type TValueOf<T> = T[keyof T];
 

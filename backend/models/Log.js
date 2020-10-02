@@ -4,7 +4,7 @@ const config = require("../api.config")
 
 const scheme = new Schema({
     action: { type: String, required: true },
-    userId: { type: String, unique: true },
+    userId: { type: String, default: 'none' },
     date: { type: Date, default: new Date },
     details: { type: String, required: true },
 });

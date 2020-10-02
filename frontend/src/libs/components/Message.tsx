@@ -18,7 +18,7 @@ type TMEssage = {
     onClose: (txt: string) => void
 } 
 
-export const Message: React.FC<TMEssage> = ({variant, text, autoHideDuration = 6000, onClose}: TMEssage) => {
+export const Message: React.FC<TMEssage> = ({variant, text, autoHideDuration = 6000, onClose }: TMEssage) => {
     const [open, setOpen] = React.useState(false)
 
     const handleClose = (event?: React.SyntheticEvent, reason?: string) => {

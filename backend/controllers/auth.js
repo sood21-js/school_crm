@@ -41,7 +41,6 @@ module.exports.login = async function (req, res) {
         //autorization by cookie token
         if (!email && !password) {
             if (req.user) {
-                console.log(req.user)
                 const id = req.user.userId
                 const user = await User.findById(id)
                 if (user) {

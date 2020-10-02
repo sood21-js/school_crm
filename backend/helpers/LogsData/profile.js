@@ -1,7 +1,4 @@
-const defaultUser = 'none'
-
-//profile
-module.exports.successfulAddProfile = function (userId = defaultUser)  {
+module.exports.successfulAddProfile = function (userId)  {
     return {
         action: 'profile',
         userId,
@@ -9,7 +6,7 @@ module.exports.successfulAddProfile = function (userId = defaultUser)  {
     }
 }
 
-module.exports.failedAddProfile = function (userId = defaultUser)  {
+module.exports.failedAddProfile = function (userId)  {
     return {
         action: 'profile',
         userId,
@@ -17,7 +14,7 @@ module.exports.failedAddProfile = function (userId = defaultUser)  {
     }
 }
 
-module.exports.successfulEditProfile = function (userId = defaultUser)  {
+module.exports.successfulEditProfile = function (userId)  {
     return {
         action: 'profile',
         userId,
@@ -25,7 +22,7 @@ module.exports.successfulEditProfile = function (userId = defaultUser)  {
     }
 }
 
-module.exports.failedEditProfile = function (userId = defaultUser)  {
+module.exports.failedEditProfile = function (userId)  {
     return {
         action: 'profile',
         userId,
@@ -33,7 +30,7 @@ module.exports.failedEditProfile = function (userId = defaultUser)  {
     }
 }
 
-module.exports.successfulDeleteProfile = function (userId = defaultUser)  {
+module.exports.successfulDeleteProfile = function (userId)  {
     return {
         action: 'profile',
         userId,
@@ -41,7 +38,7 @@ module.exports.successfulDeleteProfile = function (userId = defaultUser)  {
     }
 }
 
-module.exports.failedDeleteProfile = function (userId = defaultUser)  {
+module.exports.failedDeleteProfile = function (userId)  {
     return {
         action: 'profile',
         userId,

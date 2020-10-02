@@ -12,14 +12,12 @@ type TUsers = {
 export const Users: React.FC<TUsers> = ({disableButtons}: TUsers) =>{
 
     const [mode, setMode] = useState<String>('users_list')
-    const [data, setData] = useState<any>('')
+    const [data, setData] = useState<IUser | null>(null)
     
-    const clickHandler = (mode: TMode, data?: IUser) => {
-        if (mode === 'edit_user'){
-            disableButtons(true)
-            if (data) setData(data)
-        } else disableButtons(false)
+    const clickHandler = (mode: TMode, data: IUser | null = null) => {
+        mode === 'edit_user' ? disableButtons(true) : disableButtons(false)
         setMode(mode)
+        setData(data)
     }
 
     return (

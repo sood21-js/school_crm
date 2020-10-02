@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Redirect, Route } from 'react-router-dom'
 
 import { TState } from '../redux/types/common_types'
 
@@ -30,6 +30,7 @@ export const App: React.FC<TApp> = () => {
                             <Route exact path="/">
                                 <AuthPage />
                             </Route>
+                            <Redirect to="/" />
                         </>
                     )}
                 </ThemeProvider>
