@@ -8,7 +8,6 @@ validation
  - check phone value
 */
 
-
 export type TUseInput = {
     bind: {
         onChange: (v: string | boolean) => void,
@@ -52,20 +51,20 @@ export function useInput(
                     valid = false
                 }
                 break;
-            case 'minLength': 
-                if (options.minLength && value === typeof 'string' && options.minLength > value?.length){
+            case 'minLength':
+                if (options.minLength && typeof value === 'string' && options.minLength > value?.length){
                     setError(`Минимальное число символов ${options.minLength}`)
                     valid = false
                 }
                 break
             case 'maxLength':
-                if (options.maxLength && value === typeof 'string' && options.maxLength < value?.length){
+                if (options.maxLength && typeof value === 'string' && options.maxLength < value?.length){
                     setError(`Максимальное число символов ${options.maxLength}`)
                     valid = false
                 }
                 break
             case 'phone':
-                if (value === typeof 'string' && value?.length > 0 && value?.length !== 18){
+                if (typeof value === 'string' && value?.length > 0 && value?.length !== 18){
                     setError(`Некорректный номер`)
                     valid = false
                 }
@@ -81,7 +80,6 @@ export function useInput(
         if (init) validate()
     }, [init, validate, value])
     
-    //const regExp: RegExp = config.regexps[name]
     const onChange = (v: string | boolean) => {
         setInit(true)
         setValue(v)
@@ -93,9 +91,7 @@ export function useInput(
 
     const setDefaultValue = () => {
         setInit(false)
-        if (type === 'checkBox') setValue(false)
-        else setValue('')
-        
+        type === 'checkBox' ? setValue(false) : setValue('')
     }
 
     const result: TUseInput = { 

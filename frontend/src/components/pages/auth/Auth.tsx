@@ -75,7 +75,6 @@ export function AuthPage(){
                     <Input
                         required = {true}
                         fullWidth = {true}
-                        margin="normal"
                         id="email"
                         label="Email или Логин"
                         name="email"
@@ -91,7 +90,6 @@ export function AuthPage(){
                     <Input
                         required = {true}
                         fullWidth = {true}
-                        margin="normal"
                         id="password"
                         label="Пароль"
                         type='password'

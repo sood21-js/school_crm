@@ -9,17 +9,16 @@ import { Text } from '#src/libs/components/Text';
 import { Grid } from '#src/libs/components/Grid';
 import { Input } from '#src/libs/components/Input';
 import { Selection } from '#src/libs/components/Select';
+import { Message } from '#src/libs/components/Message';
+import { CheckBox } from '#src/libs/components/CheckBox';
 
-import config from '#src/config.app';
 import {getDefaultUser} from '../helpers/helpers';
 import { useInput } from '#src/hooks/useInput';
 import { clearProfile, fetchProfile } from '#src/redux/actions/profile';
 
 import { IUser } from '#src/redux/types/users';
-import { CheckBox } from '#src/libs/components/CheckBox';
 import { AppStateType, TState } from '#src/redux/types/common_types';
-import { Message } from '#src/libs/components/Message';
-
+import { USER_ROLES } from '#src/redux/types/role';
 
 type TEditUser = {
     changeMode: (mode: TMode) => void
@@ -46,7 +45,7 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
         position: useInput(data ? data.position : '', 'position', {}),
         education: useInput(data ? data.education : '', 'education', {}),
         active: useInput(data ? data.active : false, 'active', {}, 'checkBox'),
-        group: useInput(data ? data.group : '', 'active', {}),
+        group: useInput(data ? data.group : '', 'active', {required: true}),
     }
     type TTFDate = typeof fieldData
 
@@ -72,10 +71,6 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
     useEffect(() => {
         if (!profile.isFetching) {
             if (profile.error){
-                /* if (profile.error.data?.code === '000.023'){
-                    fieldData.login.changeError('Измените данные')
-                    fieldData.email.changeError('Измените данные')
-                } */
                 setMessage(profile.error.data?.message)
                 dispatch(clearProfile())
             }
@@ -206,7 +201,8 @@ export const EditUser: React.FC<TEditUser> = ({changeMode, data}: TEditUser) =>{
                                 Группа пользователя
                             </Text>
                             <Selection
-                                selected={config.usersRole}
+                                selected={USER_ROLES}
+                                defaultValue={'user'}
                                 {...fieldData.group.bind}
                             />
                         </div>

@@ -100,6 +100,7 @@ export const UsersList: React.FC<TUsersList> = ({changeMode}: TUsersList) => {
                         headData={defaultHead}
                         rowsData={users}
                         onClickRow={clickRowHandler}
+                        pageSize={10}
                     />
                 }
             </Module>
