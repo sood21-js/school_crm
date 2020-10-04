@@ -34,7 +34,6 @@ export const Selection: React.FC<ISelection> = ({
     disabled = false,
     helperText,
     onChange,
-    defaultValue,
     value = '',
     error = false,
     ...args
@@ -51,7 +50,6 @@ export const Selection: React.FC<ISelection> = ({
                 className={modifier} 
                 disabled={disabled}
                 size="small"
-                defaultValue={defaultValue}
             >
                 <InputLabel id={labelId}>{label}</InputLabel>
                 <Select
@@ -60,7 +58,6 @@ export const Selection: React.FC<ISelection> = ({
                     value={value}
                     onChange={handleChange}
                     error={error}
-                    defaultValue={defaultValue}
                 >
                     <MenuItem value="">Не выбрано</MenuItem>
                     {selected.map((item:TItem) => (
@@ -72,7 +69,7 @@ export const Selection: React.FC<ISelection> = ({
                         </MenuItem>
                     ))}
                 </Select>
-                <FormHelperText error={error}>{helperText}</FormHelperText>
+                <FormHelperText>{helperText}</FormHelperText>
             </FormControl>
         </>
     )

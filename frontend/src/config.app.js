@@ -10,6 +10,7 @@ const config = {
     },
     url: {
         login: `/auth/login`,
+        logout: `/auth/logout`,
         register: `/auth/register`,
         profile: '/profile/',
         logs: '/logs/'
@@ -24,13 +25,6 @@ const config = {
         notPnr: /[^A-Za-z]/g,
         requestId: /[^0-9A-Za-z-]/gm,
     },
-    usersRole: [
-        { title: 'Администратор', value: 'admin' },
-        { title: 'Руководитель', value: 'senior' },
-        { title: 'Учитель', value: 'teacher' },
-        { title: 'Ученик', value: 'student' },
-        { title: 'Пользователь', value: 'user' }
-    ]
 }
 
 export default config

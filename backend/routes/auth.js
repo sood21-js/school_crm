@@ -14,7 +14,7 @@ router.post(
             .isLength({ min: 6 })
     ],
     controller.register
-    )
+)
 
 // /auth/login
 router.post(
@@ -24,6 +24,9 @@ router.post(
         check('password', 'Введите пароль').exists()
     ],
     controller.login
-    )
+)
+
+// /auth/logout
+router.post('/logout',  controller.logout)
 
 module.exports = router

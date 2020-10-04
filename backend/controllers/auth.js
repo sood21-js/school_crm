@@ -43,13 +43,14 @@ module.exports.login = async function (req, res) {
             if (req.user) {
                 const id = req.user.userId
                 const user = await User.findById(id)
-                if (user) {
+                const  [profile] = await Profile.find({ userId: id })
+                if (user && profile) {
                     const token = jwt.sign(
                         { userId: user._id },
                         config.jwtSecret,
                         { expiresIn: '1h' }
                     )
-                    return res.status(200).json({ userId: id, isAuth: true, success: true, token })
+                    return res.status(200).json({ userId: id, isAuth: true, success: true, token, user: profile })
                 }
             }
             await Log.save(logs.failedEntry())
@@ -70,7 +71,8 @@ module.exports.login = async function (req, res) {
 
         if (email && password) {
             let user = await User.findOne({ email, password })
-            if (!user) {
+            const [profile] = await Profile.find({ userId: user._id })
+            if (!user || !profile) {
                 await Log.save(logs.failedEntry())
                 return res.status(400).json({
                     code: '000.024',
@@ -89,10 +91,27 @@ module.exports.login = async function (req, res) {
             return res.json({
                 token: `${token}`,
                 userId: user._id,
+                user: profile,
                 isAuth: true,
                 success: false
             })
         }
+
+    } catch (e) {
+        console.log(e)
+        res.status(500).json({
+            message: 'Что-то пошло не так, попробуйте снова',
+            success: false
+        })
+    }
+}
+
+module.exports.logout = async function (req, res) {
+
+    try {
+        const { user } = req
+        await Log.save(logs.successLogout(user.userId))
+        return res.status(200).json({ success: false, isAuth: false })
 
     } catch (e) {
         console.log(e)
