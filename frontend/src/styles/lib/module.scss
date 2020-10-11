@@ -36,6 +36,13 @@
   transition: 1s;
 }
 
+.module__error {
+  color: $error-red;
+  border-color: $error-red;
+}
+
+
+
 .module__message__primary {
   background-color: $primary-green;
 }

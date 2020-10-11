@@ -120,13 +120,27 @@ module.exports.put = async function (req, res) {
 module.exports.delete = async function (req, res) {
     try {
         const { id } = req.body
-        const profile = await Profile.delete(id)
+        console.log(id)
+        const profile = await Profile.findById(id)
+        console.log(profile)
         if (profile) {
-            await Log.save(logs.successfulDeleteProfile(req.user.userId))
-            return res.status(200).json({
-                message: 'Профиль успешно удален',
-                success: true
-            })
+            User.delete(profile.userId)
+                .then(() => Profile.delete(profile._id))
+                .then(() => Log.save(logs.successfulDeleteProfile(req.user.userId)))
+                .then(() => {
+                    return res.status(200).json({
+                        message: 'Профиль успешно удален',
+                        success: true
+                    })
+                })
+                .catch(() => {
+                    Log.save(logs.failedDeleteProfile(req.user.userId))
+                    return res.status(400).json({
+                        code: "001.003",
+                        message: 'Произошла ошибка при удалении профиля',
+                        success: false
+                    })
+                })
         }
         else {
             await Log.save(logs.failedDeleteProfile(req.user.userId))

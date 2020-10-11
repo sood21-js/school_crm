@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearProfile, fetchProfile } from '#src/redux/actions/profile';
 
+
 import { Message } from '#src/libs/components/Message';
 import Table from '#libs/components/Table';
 import { Module } from '#src/libs/components/Module';
@@ -11,7 +12,6 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import { TMode } from './Users';
 import { TState, AppStateType } from '#src/redux/types/common_types';
 import { IUser } from '#src/redux/types/users';
-
 
 type TUsersList = {
     changeMode: (mode: TMode, data?: any) => void
@@ -24,7 +24,8 @@ const defaultHead = [
     'Группа',
     'Статус',
     'Телефон',
-    'Позиция'
+    'Позиция',
+    ''
 ]
 
 export const UsersList: React.FC<TUsersList> = ({changeMode}: TUsersList) => {
@@ -56,10 +57,16 @@ export const UsersList: React.FC<TUsersList> = ({changeMode}: TUsersList) => {
 
     useEffect(() => {
         if (Array.isArray(data)) setUsers(prepareData(data))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data])
 
+    const removeHandler = (e: React.MouseEvent<HTMLElement>, index: number) => {
+        e.stopPropagation()
+        dispatch(fetchProfile({id: data[index]?._id}, 'delete'))
+    }
+
     const prepareData = (data: any[]) => {
-        return data.map((user: IUser) => {
+        return data.map((user: IUser, index: number) => {
             return {
                 'ФИО': `${user.lastName} ${user.name} ${user.middleName}`,
                 'Логин': user.login,
@@ -67,6 +74,10 @@ export const UsersList: React.FC<TUsersList> = ({changeMode}: TUsersList) => {
                 'Статус': user.active,
                 'Телефон': user.phone,
                 'Позиция': user.position,
+                '': <i
+                    className="fas fa-trash table__delete__icon"
+                    onClick={(e: React.MouseEvent<HTMLElement>) => removeHandler(e, index)}
+                ></i>
             }
         })
     }

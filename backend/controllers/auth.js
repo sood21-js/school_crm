@@ -53,7 +53,6 @@ module.exports.login = async function (req, res) {
                     return res.status(200).json({ userId: id, isAuth: true, success: true, token, user: profile })
                 }
             }
-            await Log.save(logs.failedEntry())
             return res.status(401).json({ success: false })
         }
 

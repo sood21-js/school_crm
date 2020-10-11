@@ -3,7 +3,6 @@ const config = require("../api.config")
 
 const { Schema, model, Types } = mongoose
 
-
 const scheme = new Schema({
     userId: { type: Types.ObjectId, unique: true },
     created: {type: Date, default: new Date},

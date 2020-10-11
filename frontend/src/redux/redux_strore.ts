@@ -27,7 +27,4 @@ const store = createStore(
     composeWithDevTools(applyMiddleware(...middleware))
 )
 
-//@ts-ignore
-window.store = store
-
 export default store
