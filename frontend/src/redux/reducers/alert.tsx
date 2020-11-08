@@ -1,4 +1,3 @@
-import { TState, defaultState } from "../types/common_types";
 import { ActionsTypes } from "../types/alert";
 import { TVariant } from "#src/libs/ui/Message";
 

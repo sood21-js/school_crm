@@ -6,9 +6,8 @@ import { useInput } from '#src/libs/hooks/useInput';
 import { Grid } from '#src/libs/ui/Grid';
 import { Input } from '#src/libs/ui/Input';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearLevel, fetchLevel } from '#src/redux/actions/level';
+import { fetchLevel } from '#src/redux/actions/level';
 import { AppStateType, TState } from '#src/redux/types/common_types';
-import { showAlert } from '#src/redux/actions/alert';
 import { ILevel, LevelKeys } from '#src/redux/types/level';
 
 type TLevels = {
