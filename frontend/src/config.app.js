@@ -1,7 +1,4 @@
 const config = {
-    devServer: {
-        port: 4200
-    },
     cookie:{
         maxAge: 3600,
         name: 'schl',
@@ -13,7 +10,8 @@ const config = {
         logout: `/auth/logout`,
         register: `/auth/register`,
         profile: '/profile/',
-        logs: '/logs/'
+        logs: '/logs/',
+        level: '/level/'
     },
     regexps: {
         companyName: /[^A-Za-z- ']/gm,

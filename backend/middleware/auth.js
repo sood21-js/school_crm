@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const config = require('../api.config')
+const config = require('../../app.config')
 
 module.exports = (req, res, next) => {
   if (req.method === 'OPTIONS') {

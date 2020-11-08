@@ -2,22 +2,20 @@ import { TState, defaultState } from "../types/common_types"
 import { ActionsTypes } from "../types/profile"
 
 export default function profileReducer(
-    state: TState = defaultState, 
+    state: TState = defaultState,
     action: ActionsTypes
 ) {
-    
-    console.log(state, action)
 
     switch (action.type) {
     case "REQUEST_PROFILE":
-        return { 
-            ...state, 
+        return {
+            ...state,
             isFetching: true,
             error: null,
             isSuccess: false
         };
     case "RECEIVE_PROFILE":
-        return { 
+        return {
             ...state,
             isFetching: false,
             error: null,
@@ -27,7 +25,7 @@ export default function profileReducer(
     case "CLEAR_PROFILE":
         return { ...state, ...defaultState}
     case "ERROR_PROFILE":
-        return { 
+        return {
             ...state,
             isFetching: false,
             isSuccess: false,

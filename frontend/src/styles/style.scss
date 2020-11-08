@@ -6,10 +6,11 @@
 @import './container/container';
 
 //components
-@import './lib/module';
-@import './lib/tabs';
-@import './lib/button.scss';
-@import './lib/table.scss';
+@import './collections/module';
+@import './collections/tabs';
+@import './collections/button.scss';
+@import './collections/table.scss';
+@import './collections/modal.scss';
 
 //pages
 @import './pages/auth';
@@ -27,7 +28,7 @@ body {
   font-size: 12px;
 }
 
-.ml05{
+D{
   margin-left: .5rem;
 }
 

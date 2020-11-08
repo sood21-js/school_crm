@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserWebpackPlugin = require('terser-webpack-plugin')
 
+const app = require('./app.config');
 const path = require('path')
 
 const isDev = process.env.NODE_ENV === 'development'
@@ -57,7 +58,7 @@ module.exports = {
     },
     optimization: optimization(),
     devServer: {
-        port: 4200,
+        port: app.appPort,
         hot: isDev,
     },
     devtool: isDev ? 'source-map' : '',

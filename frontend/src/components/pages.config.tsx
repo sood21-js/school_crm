@@ -1,5 +1,6 @@
 import React from 'react';
-import { ClassroomsPage } from './pages/classroom/Classroom';
+
+import { ClassroomsPage } from './pages/classroom/ClassroomsPage';
 import { LibaryPage } from './pages/libary/Libary';
 import { ManagementPage } from './pages/management/Management';
 import { ProfilePage } from './pages/profile/Profile';
@@ -21,7 +22,7 @@ export type TPage = {
 }
 
 export const pages: TPage[] = [
-    {   
+    {
         component: <ProfilePage />,
         path: '/',
         exact: true,
@@ -31,17 +32,16 @@ export const pages: TPage[] = [
             icon: 'far fa-user-circle'
         }
     },
-    {   
+    {
         component: <ClassroomsPage />,
         path: '/classroom',
         role_access: FULL_ACCESS,
         menu: {
             title: 'Классы',
             icon: 'fas fa-pencil-ruler'
-        } 
-       
+        }
     },
-    {   
+    {
         component: <LibaryPage />,
         path: '/libary',
         role_access: FULL_ACCESS,
@@ -50,7 +50,7 @@ export const pages: TPage[] = [
             icon: 'fas fa-book-reader'
         }
     },
-    {   
+    {
         component: <ManagementPage />,
         path: '/management',
         role_access: ['admin', 'senior'],
@@ -59,7 +59,7 @@ export const pages: TPage[] = [
             icon: 'fas fa-pencil-ruler'
         }
     },
-    {   
+    {
         component: <ReportsPage />,
         path: '/reports',
         role_access: FULL_ACCESS,
@@ -68,7 +68,7 @@ export const pages: TPage[] = [
             icon: 'fas fa-chart-line'
         }
     },
-    {   
+    {
         component: <SettingsPage />,
         path: '/settings',
         role_access: ['admin'],
@@ -77,7 +77,7 @@ export const pages: TPage[] = [
             icon: 'fas fa-cogs'
         }
     },
-    {   
+    {
         component: <TasksPage />,
         path: '/tasks',
         role_access: FULL_ACCESS,

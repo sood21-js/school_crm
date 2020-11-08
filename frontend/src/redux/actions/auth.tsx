@@ -1,4 +1,4 @@
-import { 
+import {
     RECEIVE_AUTH,
     REQUEST_AUTH,
     CLEAR_AUTH,

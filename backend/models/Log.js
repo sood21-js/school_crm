@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 const { Schema, model, Types } = mongoose
-const config = require("../api.config")
+const config = require("../../app.config")
 
 const scheme = new Schema({
     action: { type: String, required: true },

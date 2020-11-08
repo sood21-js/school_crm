@@ -1,4 +1,4 @@
-const config = require("../api.config")
+const config = require("../../app.config")
 const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator')
 

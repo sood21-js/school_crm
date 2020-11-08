@@ -4,11 +4,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
-import {useInput} from '#src/hooks/useInput'
+import {useInput} from '#src/libs/hooks/useInput'
 import { fetchAuth, clearAuth } from '#src/redux/actions/auth'
 import { TState } from '#src/redux/types/common_types'
 import { AppStateType } from '#src/redux/types/common_types'
-import { Input } from '#src/libs/components/Input'
+import { Input } from '#src/libs/ui/Input'
 
 export function AuthPage(){
     const dispatch = useDispatch();
@@ -19,7 +19,7 @@ export function AuthPage(){
 
     const submitHandler = () => {
         dispatch(fetchAuth({
-            email: email.getValue(), 
+            email: email.getValue(),
             password: password.getValue()
         }))
     }
@@ -31,8 +31,8 @@ export function AuthPage(){
         if (auth.error) dispatch(clearAuth())
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
-        dispatch, 
-        email.bind.value, 
+        dispatch,
+        email.bind.value,
         password.bind.value
     ])
 
@@ -45,7 +45,7 @@ export function AuthPage(){
                     if (er.param === 'password') password.changeError(er.msg)
                 })
             }
-            
+
         }
     }, [auth.error, dispatch, email, password])
 
@@ -114,7 +114,6 @@ export function AuthPage(){
                         {auth.isFetching ? <CircularProgress size='24px' color='inherit'/> : 'Войти'}
                     </Button>
                 </div>
-                
             </div>
         </div>
     );
