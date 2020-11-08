@@ -3,15 +3,16 @@ const app = express()
 const bodyParser = require('body-parser')
 const path = require('path')
 const cookieParser = require('cookie-parser')
-const config = require('./api.config')
+const config = require('../app.config')
 const auth = require('./middleware/auth')
 const login = require('./middleware/login')
 
 const authRoutes = require('./routes/auth')
 const profileRoutes = require('./routes/profile')
 const logsRoutes = require('./routes/logs')
+const levelRoutes = require('./routes/level')
 
-const PORT = process.env.PORT || config.port
+const PORT = process.env.PORT || config.serverPort
 
 app
     .use(express.static(__dirname))
@@ -22,8 +23,9 @@ app
 
 app.use('/auth', login, authRoutes)
 app.use('/profile', auth, profileRoutes)
+app.use('/level', auth, levelRoutes)
 app.use('/logs', auth, logsRoutes)
-app.get('/*', function (req, res) {
+app.get('/*', function (_, res) {
     res.sendFile(path.join(__dirname, '../dist', 'index.html'))
 });
 

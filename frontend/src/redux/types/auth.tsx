@@ -1,4 +1,4 @@
-import {receiveAuth, requestAuth, clearAuth, errorAuth} from '../actions/auth' 
+import {receiveAuth, requestAuth, clearAuth, errorAuth} from '../actions/auth'
 
 export const RECEIVE_AUTH = "RECEIVE_AUTH"
 export const REQUEST_AUTH = "REQUEST_AUTH"

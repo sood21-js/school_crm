@@ -11,10 +11,10 @@ export type TRoleContext = {
 export const RoleContext = React.createContext<TRoleContext>({})
 
 export const Role: React.FC = ({ children }: any) => {
-    
+
     const { data } = useSelector((state: AppStateType): TState => state.auth);
     const [role, setRole] = useState<TRole | null>(null)
-    
+
     useEffect(() => {
         if (data?.user) setRole(data.user?.group)
     },[data])

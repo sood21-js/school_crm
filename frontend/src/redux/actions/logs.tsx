@@ -3,7 +3,7 @@ import {
     REQUEST_LOGS,
     CLEAR_LOGS,
     ERROR_LOGS,
-    ActionsTypes 
+    ActionsTypes
 } from '../types/logs'
 import { TResponseError, TResponse, TFetchMethod } from '../types/common_types'
 import { fetchApi } from '../../libs/net/fetch'
@@ -14,7 +14,7 @@ import { reload } from '#src/common/reload';
 export const receiveLogs = (data: unknown) => ({ type: RECEIVE_LOGS, data } as const);
 export const requestLogs = () => ({ type: REQUEST_LOGS } as const);
 export const clearLogs = () => ({ type: CLEAR_LOGS } as const);
-export const errorLogs = (error: TResponseError) => ({ type: ERROR_LOGS, error } as const); 
+export const errorLogs = (error: TResponseError) => ({ type: ERROR_LOGS, error } as const);
 
 export const fetchLogs = (data: any, method: TFetchMethod = 'get') => (dispatch: Dispatch<ActionsTypes>) => {
     dispatch(requestLogs())

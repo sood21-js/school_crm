@@ -1,4 +1,4 @@
-import {receiveProfile, requestProfile, clearProfile, errorProfile} from '../actions/profile' 
+import {receiveProfile, requestProfile, clearProfile, errorProfile} from '../actions/profile'
 
 export const RECEIVE_PROFILE = "RECEIVE_PROFILE"
 export const REQUEST_PROFILE = "REQUEST_PROFILE"

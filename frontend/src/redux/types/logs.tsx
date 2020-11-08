@@ -1,4 +1,4 @@
-import {receiveLogs, requestLogs, clearLogs, errorLogs} from '../actions/logs' 
+import {receiveLogs, requestLogs, clearLogs, errorLogs} from '../actions/logs'
 
 export const RECEIVE_LOGS = "RECEIVE_LOGS"
 export const REQUEST_LOGS = "REQUEST_LOGS"
@@ -10,6 +10,20 @@ export interface ILog {
     action: string,
     date: string,
     details: string
+}
+
+export enum LogKeys {
+    userId = 'userId',
+    action = 'action',
+    date = 'date',
+    details = 'details'
+}
+
+export enum LogNames {
+    userId = 'userId',
+    action = 'действие',
+    date = 'дата',
+    details = 'подробности'
 }
 
 export type TRequest = ReturnType<typeof requestLogs>

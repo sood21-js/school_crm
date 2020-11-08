@@ -1,12 +1,12 @@
 const mongoose = require("mongoose")
-const config = require("../api.config")
+const config = require("../../app.config")
 
 const { Schema, model, Types } = mongoose
 
 const scheme = new Schema({
     userId: { type: Types.ObjectId, unique: true },
     created: {type: Date, default: new Date},
-    modified: {type: Date},
+    modified: {type: Date },
     name: {
         type: String,
         default: ''

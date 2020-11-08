@@ -2,22 +2,20 @@ import { TState, defaultState } from "../types/common_types"
 import { ActionsTypes } from "../types/logs"
 
 export default function profileReducer(
-    state: TState = defaultState, 
+    state: TState = defaultState,
     action: ActionsTypes
 ) {
-    
-    console.log(state, action)
 
     switch (action.type) {
     case "REQUEST_LOGS":
-        return { 
-            ...state, 
+        return {
+            ...state,
             isFetching: true,
             error: null,
             isSuccess: false
         };
     case "RECEIVE_LOGS":
-        return { 
+        return {
             ...state,
             isFetching: false,
             error: null,
@@ -27,7 +25,7 @@ export default function profileReducer(
     case "CLEAR_LOGS":
         return { ...state, ...defaultState}
     case "ERROR_LOGS":
-        return { 
+        return {
             ...state,
             isFetching: false,
             isSuccess: false,

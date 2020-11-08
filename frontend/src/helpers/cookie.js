@@ -23,7 +23,6 @@ export function setCookie(name, value, options = {}) {
             updatedCookie += "=" + optionValue;
         }
     }
-
     document.cookie = updatedCookie;
 }
 

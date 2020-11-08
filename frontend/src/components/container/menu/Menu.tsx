@@ -38,14 +38,12 @@ export const Menu: React.FC = () => {
                         )
                     }
                 })}
-
                 <NavLink exact to={`/logout`} activeClassName="menu__item__active">
                     <div className="menu__item" onClick={exitHandler}>
                         <i className="fas fa-sign-out-alt"></i>
                         Выход
                     </div>
                 </NavLink>
-                
             </div>
         </div>
     )

@@ -1,0 +1,46 @@
+@import "../variables";
+@import "../mixins/index.scss";
+
+.table {
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.table__head {
+  border-bottom: 1px solid gray;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  padding-bottom: 0.5rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.table__body__row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  padding: 0.5rem 0 0.5rem 0;
+  text-align: center;
+  &:nth-child(even){
+    background-color: rgba(237, 244, 250, 57%);
+  }
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+    cursor: pointer
+  }
+}
+
+ .table__body__row__item{
+  word-break: break-all;
+ }
+
+ .table__delete__icon{
+  color: $error-red;
+  border-color:$error-red;
+  font-size: .8rem;
+  padding: .5rem;
+  border: 1px solid;
+  &:hover{ @include shadow(); }
+ }
+ 
+
+
