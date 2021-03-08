@@ -9,6 +9,7 @@ const Log = require('../models/Log')
 const logs = require('../helpers/LogsData/auth')
 
 console.log('asdadasdasd!')
+console.log('run!')
 
 module.exports.register = async function (req, res) {
     try {
