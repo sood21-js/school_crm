@@ -8,6 +8,8 @@ const Log = require('../models/Log')
 
 const logs = require('../helpers/LogsData/auth')
 
+console.log('asdadasdasd!')
+
 module.exports.register = async function (req, res) {
     try {
         const newUser = req.body
