@@ -7,7 +7,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import { ModalLevelForm } from './ModalLevelForm';
 
 import moment from 'moment';
-import { TState, AppStateType } from '#src/redux/types/common_types';
+import { TState, AppStateType, FetchMethod } from '#src/redux/types/common_types';
 import { fetchLevel } from '#src/redux/actions/level';
 import Table, { THeadData, TRowsData } from '#src/libs/ui/Table';
 import { ILevel, LevelNames, LevelKeys } from '#src/redux/types/level';
@@ -28,7 +28,7 @@ export const Levels: React.FC = () => {
             onOk: () => {
                 dispatch(fetchLevel({
                     data: {id: data[index]?._id},
-                    method: 'delete'
+                    method: FetchMethod.DELETE
                 }))
             },
             dialogText: 'Вы действительно хотите удалить уровень?'

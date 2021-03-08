@@ -5,14 +5,17 @@ import { Tabs, ITabs, changeButtons } from '#src/libs/ui/Tabs';
 import { Classrooms } from './components/Classroms';
 import { Levels } from './components/Levels';
 
-export type TMode = 'classrooms' | 'levels'
+export enum ClassroomPageMode {
+    classrooms = 'classrooms',
+    levels = 'levels'
+}
 
 export function ClassroomsPage(){
-    const [mode, setMode] = useState<TMode>('classrooms')
+    const [mode, setMode] = useState<ClassroomPageMode>(ClassroomPageMode.classrooms)
     const [tabs, setTabs] = useState<ITabs>(ClASSROOM_TABS)
 
-    const changeHandler = (mode: any) => {
-        setMode(mode)
+    const changeHandler = (mode: string) => {
+        setMode(mode as ClassroomPageMode)
         const newTanbs: ITabs = {
             ...tabs,
             btns: changeButtons(tabs.btns, mode)
@@ -27,8 +30,8 @@ export function ClassroomsPage(){
 
             <Tabs {...tabs} onClick={changeHandler}/>
 
-            {mode === 'classrooms' && <Classrooms />}
-            {mode === 'levels' && <Levels />}
+            {mode === ClassroomPageMode.classrooms && <Classrooms />}
+            {mode === ClassroomPageMode.levels && <Levels />}
         </>
     )
 }

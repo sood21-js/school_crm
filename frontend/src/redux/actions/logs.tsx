@@ -5,7 +5,7 @@ import {
     ERROR_LOGS,
     ActionsTypes
 } from '../types/logs'
-import { TResponseError, TResponse, TFetchMethod } from '../types/common_types'
+import { TResponseError, TResponse, FetchMethod } from '../types/common_types'
 import { fetchApi } from '../../libs/net/fetch'
 import config from '../../config.app'
 import { Dispatch } from 'redux';
@@ -16,7 +16,7 @@ export const requestLogs = () => ({ type: REQUEST_LOGS } as const);
 export const clearLogs = () => ({ type: CLEAR_LOGS } as const);
 export const errorLogs = (error: TResponseError) => ({ type: ERROR_LOGS, error } as const);
 
-export const fetchLogs = (data: any, method: TFetchMethod = 'get') => (dispatch: Dispatch<ActionsTypes>) => {
+export const fetchLogs = (data: any, method: FetchMethod = FetchMethod.GET) => (dispatch: Dispatch<ActionsTypes>) => {
     dispatch(requestLogs())
     return fetchApi(data, `${config.url.logs}${method}`)
         .then((resuilt: TResponse) => {

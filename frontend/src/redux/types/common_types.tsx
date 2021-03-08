@@ -3,16 +3,14 @@ import { RootReducerType } from "../redux_strore"
 export type AppStateType = ReturnType<RootReducerType>
 
 export const defaultState = {
-    isFetching: false,
+    loading: false,
     error: null,
-    isSuccess: false,
     data: null,
 }
 
 export type TState = {
-    isFetching: boolean,
+    loading: boolean,
     error: any,
-    isSuccess: boolean,
     data: any,
 }
 
@@ -25,10 +23,16 @@ export type TResponse = {
     message?: string
     success?: boolean
 }
-export type TFetchMethod = 'get_all' | 'get' | 'add' | 'put' | 'delete'
+export enum FetchMethod {
+    GET_ALL = 'GET_ALL',
+    GET = 'GET',
+    ADD = 'ADD',
+    PUT = 'PUT',
+    DELETE = 'DELETE'
+}
 export type TRequest = {
     data?: any
-    method?: TFetchMethod
+    method?: FetchMethod
 }
 
 export type TObject<T = any> = { [key: string]: T };

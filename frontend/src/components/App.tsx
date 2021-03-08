@@ -18,9 +18,9 @@ export const App: React.FC<TApp> = () => {
     const dispatch = useDispatch();
     const auth = useSelector((state: AppStateType): TState => state.auth)
     const isAuth = auth.data?.isAuth || false
-    useEffect(() => {
+/*     useEffect(() => {
         dispatch(fetchAuth({}))
-    }, [])
+    }, [dispatch]) */
     return (
         <>
             <BrowserRouter>

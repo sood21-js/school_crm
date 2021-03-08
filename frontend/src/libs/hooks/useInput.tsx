@@ -20,6 +20,7 @@ export type TUseInput = {
     changeError: (text: string) => void,
     getValue: () => string | boolean,
     setDefaultValue: () => void,
+    clearValue: () => void
 }
 
 type TOptions = {
@@ -96,6 +97,8 @@ export function useInput(
         type === 'checkBox' ? setValue(false) : setValue('')
     }
 
+    const clearValue = () => setValue('')
+
     const result: TUseInput = {
         bind: {
             onChange,
@@ -105,7 +108,8 @@ export function useInput(
         validate,
         changeError,
         getValue,
-        setDefaultValue
+        setDefaultValue,
+        clearValue
     }
 
     if (type === 'checkBox' && typeof value === 'boolean'){

@@ -7,7 +7,7 @@ import Table, { THeadData } from '#src/libs/ui/Table';
 import { Module } from '#src/libs/ui/Module';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { TState, AppStateType } from '#src/redux/types/common_types';
+import { TState, AppStateType, FetchMethod } from '#src/redux/types/common_types';
 import { LogKeys, LogNames } from '#src/redux/types/logs';
 
 export function LogsList(){
@@ -18,15 +18,15 @@ export function LogsList(){
         { title: LogNames.details, name: LogKeys.details},
     ]
     const dispatch = useDispatch();
-    const logs = useSelector((state: AppStateType): TState => state.logs);
+    const logs = useSelector((state: AppStateType): TState => state.log);
     const [data, setData] = useState(logs.data || [])
 
     useEffect(() => {
-        dispatch(fetchLogs('', 'get_all'))
+        dispatch(fetchLogs('', FetchMethod.GET_ALL))
     }, [dispatch])
 
     useEffect(() => {
-        if (logs.data?.length > 0){
+        if (logs?.data?.length > 0){
             const newData = prepareData(logs.data)
             setData([...newData])
         }

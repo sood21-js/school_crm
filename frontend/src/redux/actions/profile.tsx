@@ -5,7 +5,7 @@ import {
     ERROR_PROFILE,
     ActionsTypes
 } from '../types/profile'
-import { TResponseError, TResponse, TRequest } from '../types/common_types'
+import { TResponseError, TResponse, TRequest, FetchMethod } from '../types/common_types'
 import { fetchApi } from '../../libs/net/fetch'
 import config from '../../config.app'
 import { Dispatch } from 'redux';
@@ -16,7 +16,7 @@ export const requestProfile = () => ({ type: REQUEST_PROFILE } as const);
 export const clearProfile = () => ({ type: CLEAR_PROFILE } as const);
 export const errorProfile = (error: TResponseError) => ({ type: ERROR_PROFILE, error } as const);
 
-export const fetchProfile = ({ data, method = 'get' }: TRequest) => (dispatch: Dispatch<ActionsTypes>) => {
+export const fetchProfile = ({ data, method = FetchMethod.GET }: TRequest) => (dispatch: Dispatch<ActionsTypes>) => {
     dispatch(requestProfile())
     return fetchApi(data, `${config.url.profile}${method}`)
         .then((resuilt: TResponse) => {

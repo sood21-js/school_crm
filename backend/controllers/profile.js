@@ -1,7 +1,7 @@
 const User = require('../models/User')
 const Profile = require('../models/Profile')
 const Log = require('../models/Log')
-const logs = require('../helpers/LogsData/profile')
+const logs = require('../utils/LogsData/profile')
 
 module.exports.getAll = async function (req, res) {
     try {

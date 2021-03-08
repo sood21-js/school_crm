@@ -6,7 +6,7 @@ const User = require('../models/User')
 const Profile = require('../models/Profile')
 const Log = require('../models/Log')
 
-const logs = require('../helpers/LogsData/auth')
+const logs = require('../utils/LogsData/auth')
 
 module.exports.register = async function (req, res) {
     try {
@@ -36,6 +36,7 @@ module.exports.register = async function (req, res) {
 module.exports.login = async function (req, res) {
 
     try {
+        console.log(req.body);
         const { email, password } = req.body
 
         //autorization by cookie token
@@ -92,7 +93,7 @@ module.exports.login = async function (req, res) {
                 userId: user._id,
                 user: profile,
                 isAuth: true,
-                success: false
+                success: true
             })
         }
 

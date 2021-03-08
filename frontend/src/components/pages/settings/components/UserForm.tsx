@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Module } from '#src/libs/ui/Module';
 import { Button } from '#src/libs/ui/Button';
 import { Flex } from '#src/libs/ui/Flex';
-import { TMode } from './Users';
+import { SettingPageMode } from './Users';
 import { Text } from '#src/libs/ui/Text';
 import { Grid } from '#src/libs/ui/Grid';
 import { Input } from '#src/libs/ui/Input';
@@ -12,16 +12,16 @@ import { Selection } from '#src/libs/ui/Select';
 import { Message } from '#src/libs/ui/Message';
 import { CheckBox } from '#src/libs/ui/CheckBox';
 
-import {getDefaultUser} from '../helpers/helpers';
+import {getDefaultUser} from '../utils/utils';
 import { useInput } from '#src/libs/hooks/useInput';
 import { clearProfile, fetchProfile } from '#src/redux/actions/profile';
 
 import { IUser } from '#src/redux/types/users';
-import { AppStateType, TState } from '#src/redux/types/common_types';
+import { AppStateType, FetchMethod, TState } from '#src/redux/types/common_types';
 import { USER_ROLES } from '#src/redux/types/role';
 
 type TUserForm = {
-    changeMode: (mode: TMode) => void
+    changeMode: (mode: SettingPageMode) => void
     data: any
 }
 
@@ -30,7 +30,7 @@ export const UserForm: React.FC<TUserForm> = ({changeMode, data}: TUserForm) =>{
     const dispatch = useDispatch()
     const profile = useSelector((state: AppStateType): TState => state.profile)
 
-    const method = data ? 'put' : 'add'
+    const method = data ? FetchMethod.PUT : FetchMethod.ADD
     const user: IUser = data ? data : getDefaultUser()
     const [message, setMessage] = useState<string>('')
 
@@ -39,7 +39,7 @@ export const UserForm: React.FC<TUserForm> = ({changeMode, data}: TUserForm) =>{
         middleName: useInput(data ? data.middleName : '', 'middleName', {required: true, maxLength: 20}),
         lastName: useInput(data ? data.lastName : '', 'lastName',  {required: true, maxLength: 20}),
         login: useInput(data ? data.login : '', 'login',  {required: true}),
-        password: useInput(data ? data.password : '', 'password',  {required: method === 'add', minLength: 6}),
+        password: useInput(data ? data.password : '', 'password',  {required: method === FetchMethod.ADD, minLength: 6}),
         phone: useInput(data ? data.phone : '', 'phone', {phone: true}),
         email: useInput(data ? data.email : '', 'email',  {required: true}),
         position: useInput(data ? data.position : '', 'position', {}),
@@ -75,7 +75,7 @@ export const UserForm: React.FC<TUserForm> = ({changeMode, data}: TUserForm) =>{
                 dispatch(clearProfile())
             }
             if (profile.data?.success && profile.data?.message){
-                changeMode('users_list')
+                changeMode(SettingPageMode.users_list)
             }
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -88,7 +88,7 @@ export const UserForm: React.FC<TUserForm> = ({changeMode, data}: TUserForm) =>{
         <>
             <Module>
                 <Text modifier='user__block__title__h2'>
-                    {method === 'add'
+                    {method === FetchMethod.ADD
                         ? 'Создать нового пользователя'
                         : 'Редактировать пользователя'
                     }
@@ -261,7 +261,7 @@ export const UserForm: React.FC<TUserForm> = ({changeMode, data}: TUserForm) =>{
 
                     <div className='users__btn'>
                         <Button
-                            onClick={() => changeMode('users_list')}
+                            onClick={() => changeMode(SettingPageMode.users_list)}
                             variant='outlined'
                             size='small'
                             content="Назад"

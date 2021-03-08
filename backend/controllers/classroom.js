@@ -1,12 +1,13 @@
-const Level = require('../models/Level')
+const Classroom = require('../models/Classroom')
 const Log = require('../models/Log')
-const logs = require('../utils/LogsData/level')
+const logs = require('../utils/LogsData/classroom')
 
 module.exports.get = async function (req, res) {
     try {
-        const levels = await Level.find()
-        if (levels) {
-            res.status(200).json(levels)
+        console.log('req =', req.body)
+        const classrooms = await Classroom.find()
+        if (classrooms) {
+            res.status(200).json(classrooms)
         }
         else {
             res.status(400).json({
@@ -27,17 +28,17 @@ module.exports.get = async function (req, res) {
 
 module.exports.add = async function (req, res) {
     try {
-        const level = await Level.save(req.body)
-        console.log(level)
-        if (level) {
-            await Log.save(logs.successfulAddLevel())
+        const classroom = await Classroom.save(req.body)
+        console.log(classroom)
+        if (classroom) {
+            await Log.save(logs.successfulAddClassroom())
             return res.status(201).json({
-                data: level,
-                message: 'Уровень успешно создан',
+                data: classroom,
+                message: 'Класс успешно создан',
                 success: true
             })
         } else {
-            await Log.save(logs.failedAddLevel(req.user.userId))
+            await Log.save(logs.failedAddClassroom(req.user.userId))
             res.status(400).json({
                 code: "051.002",
                 message: 'Ошибка при сохранении уровня',
@@ -56,17 +57,17 @@ module.exports.add = async function (req, res) {
 
 module.exports.put = async function (req, res) {
     try {
-        const level = await Level.update(req.body)
-        console.log(level)
-        if (level) {
-            await Log.save(logs.successfulEditLevel(req.body._id))
+        const classroom = await Classroom.update(req.body)
+        console.log(classroom)
+        if (classroom) {
+            await Log.save(logs.successfulEditClassroom(req.body._id))
             return res.status(201).json({
-                data: level,
-                message: 'Уровень успешно обновлен',
+                data: classroom,
+                message: 'Класс успешно обновлен',
                 success: true
             })
         } else {
-            await Log.save(logs.failedEditLevel(req.body._id))
+            await Log.save(logs.failedEditClassroom(req.body._id))
             res.status(400).json({
                 code: "051.003",
                 message: 'Ошибка при обновлении уровня',
@@ -87,17 +88,17 @@ module.exports.delete = async function (req, res) {
     try {
         console.log(req.body)
         const { id } = req.body
-        const level = await Level.delete(id)
-        console.log(level)
-        if (level) {
-            await Log.save(logs.successfullDeleteLevel())
+        const classroom = await Classroom.delete(id)
+        console.log(classroom)
+        if (classroom) {
+            await Log.save(logs.successfullDeleteClassroom())
             return res.status(201).json({
-                data: level,
-                message: 'Уровень успешно удален',
+                data: classroom,
+                message: 'Класс успешно удален',
                 success: true
             })
         } else {
-            await Log.save(logs.failedDeleteLevel())
+            await Log.save(logs.failedDeleteClassroom())
             res.status(400).json({
                 code: "051.004",
                 message: 'Ошибка при удалении уровня',

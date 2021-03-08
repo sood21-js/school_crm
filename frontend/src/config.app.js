@@ -11,7 +11,8 @@ const config = {
         register: `/auth/register`,
         profile: '/profile/',
         logs: '/logs/',
-        level: '/level/'
+        level: '/level/',
+        classroom: '/classroom/'
     },
     regexps: {
         companyName: /[^A-Za-z- ']/gm,

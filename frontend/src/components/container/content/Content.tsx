@@ -4,7 +4,7 @@ import { compose } from "redux";
 import { withRouter } from 'react-router-dom';
 
 import { pages, TPage } from '#src/components/pages.config';
-import { RoleContext, TRoleContext } from '#src/libs/context/Role';
+import { RoleContext, TRoleContext } from '#src/libs/providers/Role';
 import { Message } from '#src/libs/ui/Message';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '#src/redux/types/common_types';

@@ -6,7 +6,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 
-type TItem = {title: string, value: string}
+export interface IOption {title: string, value: string}
 
 export interface ISelection {
     id?: string
@@ -14,7 +14,7 @@ export interface ISelection {
     labelId?: string
     value?: string
     variant?: 'outlined' | 'filled'
-    selected: Array<TItem>
+    selected: Array<IOption>
     defaultValue?: string
     disabled?: boolean
     modifier?: string
@@ -52,6 +52,7 @@ export const Selection: React.FC<ISelection> = ({
                 disabled={disabled}
                 size="small"
                 defaultValue={defaultValue}
+                style={{ width: '100%' }}
             >
                 <InputLabel id={labelId}>{label}</InputLabel>
                 <Select
@@ -63,7 +64,7 @@ export const Selection: React.FC<ISelection> = ({
                     defaultValue={defaultValue}
                 >
                     <MenuItem value="">Не выбрано</MenuItem>
-                    {selected.map((item:TItem) => (
+                    {selected.map((item: IOption) => (
                         <MenuItem
                             key={Math.random()}
                             value={item.value}

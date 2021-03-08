@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { pages, TPage } from '#src/components/pages.config';
-import { RoleContext, TRoleContext } from '#src/libs/context/Role';
+import { RoleContext, TRoleContext } from '#src/libs/providers/Role';
 import config from '#src/config.app';
 import { fetchAuth } from '#src/redux/actions/auth';
 

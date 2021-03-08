@@ -33,22 +33,13 @@
         "react-hooks"
     ],
     "rules": {
+        "max-len": "off",
         "no-trailing-spaces": "error",
          // "object-curly-spacing": "error",
-        "indent": ["error"],
+        "indent": "off",
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
         "no-console": 0,
-        "max-len": [2, {
-            "code": 3000,
-            "tabWidth": 0,
-            "ignoreUrls": true,
-            "ignoreStrings": true,
-            "ignoreComments": true,
-            "ignoreTrailingComments": true,
-            "ignoreTemplateLiterals": true,
-            "ignoreRegExpLiterals": true
-        }],
         "linebreak-style": 0,
         "import/no-cycle": 0,
         "global-require": 0,

@@ -11,7 +11,7 @@ export interface IConfirmState extends IShowConfirm {
     open: boolean
 }
 
-export default function alertReducer(
+export function confirmReducer(
     state: IConfirmState = {
         onOk: () => {},
         open: false

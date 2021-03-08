@@ -7,7 +7,7 @@ import { Grid } from '#src/libs/ui/Grid';
 import { Input } from '#src/libs/ui/Input';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchLevel } from '#src/redux/actions/level';
-import { AppStateType, TState } from '#src/redux/types/common_types';
+import { AppStateType, FetchMethod, TState } from '#src/redux/types/common_types';
 import { ILevel, LevelKeys } from '#src/redux/types/level';
 
 type TLevels = {
@@ -21,7 +21,8 @@ export const ModalLevelForm: React.FC<TLevels> = ({
     visible,
     onClose
 }: TLevels) => {
-    const method = level ? 'put' : 'add'
+    const method = level ? FetchMethod.PUT : FetchMethod.ADD
+    const isEdit = !!level
     const dispatch = useDispatch()
     const { isFetching, data } = useSelector((state: AppStateType): TState => state.level)
 
@@ -30,11 +31,12 @@ export const ModalLevelForm: React.FC<TLevels> = ({
     }
 
     const saveHandler = () => {
-        const newLevel = {}
+        const newLevel = { ...level }
         Object.keys(fieldData).forEach((key) => {
             (newLevel as any)[key] = (fieldData as any)[key].getValue()
         })
         dispatch(fetchLevel({ data: newLevel, method }))
+        fieldData.name.clearValue()
     }
 
     useEffect(() => {
@@ -73,7 +75,7 @@ export const ModalLevelForm: React.FC<TLevels> = ({
                     onClick={saveHandler}
                     variant='outlined'
                     size='small'
-                    content="Сохранить"
+                    content={isEdit ? 'Редактировать' : 'Сохранить'}
                 />
                 <Button
                     disabled={isFetching}

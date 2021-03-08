@@ -13,11 +13,11 @@ import { useInput } from '#src/libs/hooks/useInput';
 import { clearProfile, fetchProfile } from '#src/redux/actions/profile';
 
 import { IUser } from '#src/redux/types/users';
-import { AppStateType, TState } from '#src/redux/types/common_types';
-import { TMode } from '../ClassroomsPage';
+import { AppStateType, FetchMethod, TState } from '#src/redux/types/common_types';
+import { ClassroomPageMode } from '../ClassroomsPage';
 
 type TEditUser = {
-    changeMode: (mode: TMode) => void
+    changeMode: (mode: ClassroomPageMode) => void
     data: any
 }
 
@@ -29,7 +29,7 @@ export const ClassroomForm: React.FC<TEditUser> = ({
     const dispatch = useDispatch()
     const profile = useSelector((state: AppStateType): TState => state.profile)
 
-    const method = data ? 'put' : 'add'
+    const method = data ? FetchMethod.PUT : FetchMethod.ADD
     const user: IUser = data
     const [message, setMessage] = useState<string>('')
 
@@ -66,7 +66,7 @@ export const ClassroomForm: React.FC<TEditUser> = ({
                 dispatch(clearProfile())
             }
             if (profile.data?.success && profile.data?.message){
-                changeMode('classrooms')
+                changeMode(ClassroomPageMode.classrooms)
             }
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -79,7 +79,7 @@ export const ClassroomForm: React.FC<TEditUser> = ({
         <>
             <Module>
                 <Text modifier='user__block__title__h2'>
-                    {method === 'add'
+                    {method === FetchMethod.ADD
                         ? 'Создать новый класс'
                         : 'Редактировать класс'
                     }
@@ -143,7 +143,7 @@ export const ClassroomForm: React.FC<TEditUser> = ({
 
                     <div className='users__btn'>
                         <Button
-                            onClick={() => changeMode('classrooms')}
+                            onClick={() => changeMode(ClassroomPageMode.classrooms)}
                             variant='outlined'
                             size='small'
                             content="Назад"

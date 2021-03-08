@@ -5,7 +5,7 @@ export interface IAlertState {
     message: string
     variant: TVariant
 }
-export default function alertReducer(
+export function alertReducer(
     state: IAlertState = {
         message: '',
         variant: 'success',

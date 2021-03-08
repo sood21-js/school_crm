@@ -1,6 +1,4 @@
-import {
-    RECEIVE_AUTH,
-    REQUEST_AUTH,
+/* import {
     CLEAR_AUTH,
     ERROR_AUTH,
     ILogin,
@@ -10,7 +8,7 @@ import { TResponseError, TResponse } from '../types/common_types'
 import { fetchApi } from '../../libs/net/fetch'
 import config from '../../config.app'
 import { Dispatch } from 'redux';
-import { setCookie, deleteCookie } from '#src/helpers/cookie';
+import { setCookie, deleteCookie } from '#src/utils/cookie';
 
 export const receiveAuth = (data: any) => ({ type: RECEIVE_AUTH, data } as const);
 export const requestAuth = () => ({ type: REQUEST_AUTH } as const);
@@ -34,4 +32,4 @@ export const fetchAuth = (data: ILogin, url = config.url.login) => (dispatch: Di
                 status: error.response?.status
             }))
         })
-}
+} */

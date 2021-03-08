@@ -1,11 +1,10 @@
 import { TState, defaultState } from "../types/common_types"
 import { ActionsTypes } from "../types/level"
 
-export default function profileReducer(
+export function levelReducer(
     state: TState = defaultState,
     action: ActionsTypes
 ) {
-
     switch (action.type) {
     case "REQUEST_LEVEL":
         return {

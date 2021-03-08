@@ -1,10 +1,10 @@
 import {
-    RECEIVE_LEVEL,
-    REQUEST_LEVEL,
-    CLEAR_LEVEL,
-    ERROR_LEVEL,
+    RECEIVE_CLASSROOM,
+    REQUEST_CLASSROOM,
+    CLEAR_CLASSROOM,
+    ERROR_CLASSROOM,
     ActionsTypes
-} from '../types/level';
+} from '../types/classrooms';
 import { ActionsTypes as AlertActionsTypes } from '../types/alert';
 import { TResponseError, TResponse, TRequest, FetchMethod } from '../types/common_types';
 import { fetchApi } from '../../libs/net/fetch';
@@ -14,25 +14,25 @@ import { reload } from '#src/common/reload';
 import { showAlert } from './alert';
 import { AxiosResponse } from 'axios';
 
-export const receiveLevel = (data: unknown) => ({ type: RECEIVE_LEVEL, data } as const);
-export const requestLevel = () => ({ type: REQUEST_LEVEL } as const);
-export const clearLevel = () => ({ type: CLEAR_LEVEL } as const);
-export const errorLevel = (error: TResponseError) => ({ type: ERROR_LEVEL, error } as const);
+export const receiveClassroom = (data: unknown) => ({ type: RECEIVE_CLASSROOM, data } as const);
+export const requestClassroom = () => ({ type: REQUEST_CLASSROOM } as const);
+export const clearClassroom = () => ({ type: CLEAR_CLASSROOM } as const);
+export const errorClassroom = (error: TResponseError) => ({ type: ERROR_CLASSROOM, error } as const);
 
-export const fetchLevel = ({data, method = FetchMethod.GET}: TRequest = {}) => (dispatch: Dispatch<ActionsTypes | AlertActionsTypes>) => {
-    dispatch(requestLevel())
-    return fetchApi(data, `${config.url.level}${method}`)
+export const fetchClassroom = ({data, method = FetchMethod.GET}: TRequest = {}) => (dispatch: Dispatch<ActionsTypes | AlertActionsTypes>) => {
+    dispatch(requestClassroom())
+    return fetchApi(data, `${config.url.classroom}${method}`)
         .then((resuilt: AxiosResponse<TResponse>) => {
             if (resuilt.data.message) {
                 dispatch(showAlert(resuilt.data.message, 'success'))
             }
-            dispatch(receiveLevel(resuilt.data))
+            dispatch(receiveClassroom(resuilt.data))
         })
         .catch(( { response } : { response: AxiosResponse<TResponse>}) => {
             if (response.data.message) {
                 dispatch(showAlert(response.data.message, 'error'))
             }
-            dispatch(errorLevel({
+            dispatch(errorClassroom({
                 data: response?.status !== 404
                     ? response?.data
                     : { message: 'Сервер не отвечает, попробуйте повторить запрос позже'},

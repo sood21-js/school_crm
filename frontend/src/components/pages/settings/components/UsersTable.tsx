@@ -9,14 +9,14 @@ import { Module } from '#src/libs/ui/Module';
 import { Button } from '#src/libs/ui/Button';
 import CircularProgress from '@material-ui/core/CircularProgress'
 
-import { TMode } from './Users';
-import { TState, AppStateType } from '#src/redux/types/common_types';
+import { SettingPageMode } from './Users';
+import { TState, AppStateType, FetchMethod } from '#src/redux/types/common_types';
 import { IUser, UsersKeys, UsersNames } from '#src/redux/types/users';
 import { showConfirm } from '#src/redux/actions/confirm';
 import { CheckBox } from '#src/libs/ui/CheckBox';
 
 type TUsersList = {
-    changeMode: (mode: TMode, data?: any) => void
+    changeMode: (mode: SettingPageMode, data?: any) => void
 }
 type TUsers = any[]
 
@@ -36,15 +36,15 @@ export const UsersList: React.FC<TUsersList> = ({changeMode}: TUsersList) => {
     const [users, setUsers] = useState<TUsers>(Array.isArray(data) ? data : [])
 
     useEffect(() => {
-        dispatch(fetchProfile({method: "get_all"}))
+        dispatch(fetchProfile({method: FetchMethod.GET_ALL}))
     }, [dispatch])
 
     const clickRowHandler = (index: number) => {
         const user = data && data[index]
-        changeMode('edit_user', user)
+        changeMode(SettingPageMode.edit_user, user)
     }
 
-    const clickHandler = () => changeMode('edit_user')
+    const clickHandler = () => changeMode(SettingPageMode.edit_user)
 
     useEffect(() => {
         if (!isFetching) {
@@ -67,7 +67,7 @@ export const UsersList: React.FC<TUsersList> = ({changeMode}: TUsersList) => {
             onOk: () => {
                 dispatch(fetchProfile({
                     data: {id: data[index]?._id},
-                    method: 'delete'
+                    method: FetchMethod.DELETE
                 }))
             },
             dialogText: 'Вы действительно хотите удалить пользователя?'

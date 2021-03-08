@@ -1,6 +1,6 @@
 module.exports.successfulAddLevel = function (userId)  {
     return {
-        action: 'profile',
+        action: 'add',
         userId,
         details: 'Успешное добавление уровня'
     }
@@ -8,7 +8,7 @@ module.exports.successfulAddLevel = function (userId)  {
 
 module.exports.failedAddLevel = function (userId)  {
     return {
-        action: 'profile',
+        action: 'add',
         userId,
         details: 'Неудачная попытка добавления уровня'
     }
@@ -16,7 +16,7 @@ module.exports.failedAddLevel = function (userId)  {
 
 module.exports.successfulEditLevel = function (userId)  {
     return {
-        action: 'profile',
+        action: 'edit',
         userId,
         details: 'Успешное редактирование уровня'
     }
@@ -24,7 +24,7 @@ module.exports.successfulEditLevel = function (userId)  {
 
 module.exports.failedEditLevel = function (userId)  {
     return {
-        action: 'profile',
+        action: 'edit',
         userId,
         details: 'Неудачная попытка редактирования уровня'
     }
@@ -32,7 +32,7 @@ module.exports.failedEditLevel = function (userId)  {
 
 module.exports.successfullDeleteLevel = function (userId)  {
     return {
-        action: 'profile',
+        action: 'delete',
         userId,
         details: 'Успешное удаление уровня'
     }
@@ -40,7 +40,7 @@ module.exports.successfullDeleteLevel = function (userId)  {
 
 module.exports.failedDeleteLevel = function (userId)  {
     return {
-        action: 'profile',
+        action: 'delete',
         userId,
         details: 'Неудачная попытка удаления уровня'
     }

@@ -11,6 +11,7 @@ const authRoutes = require('./routes/auth')
 const profileRoutes = require('./routes/profile')
 const logsRoutes = require('./routes/logs')
 const levelRoutes = require('./routes/level')
+const classroomRoutes = require('./routes/classroom')
 
 const PORT = process.env.PORT || config.serverPort
 
@@ -21,13 +22,16 @@ app
     .use(bodyParser())
     .use(cookieParser())
 
-app.use('/auth', login, authRoutes)
-app.use('/profile', auth, profileRoutes)
-app.use('/level', auth, levelRoutes)
-app.use('/logs', auth, logsRoutes)
+app
+    .use('/auth', login, authRoutes)
+    .use('/profile', auth, profileRoutes)
+    .use('/level', auth, levelRoutes)
+    .use('/logs', auth, logsRoutes)
+    .use('/classroom', auth, classroomRoutes)
+
 app.get('/*', function (_, res) {
     res.sendFile(path.join(__dirname, '../dist', 'index.html'))
-});
+})
 
 app.listen(PORT);
 

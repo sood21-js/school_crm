@@ -1,11 +1,10 @@
 import { TState, defaultState } from "../types/common_types"
 import { ActionsTypes } from "../types/logs"
 
-export default function profileReducer(
+export function logReducer(
     state: TState = defaultState,
     action: ActionsTypes
 ) {
-
     switch (action.type) {
     case "REQUEST_LOGS":
         return {
